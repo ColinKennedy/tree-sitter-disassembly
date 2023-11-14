@@ -24,19 +24,6 @@ module.exports = grammar(
         ],
 
         rules: {
-            // source: $ => $.code_location,
-            //
-            // code_location: $ => seq(
-            //     "<",
-            //     alias($.code_identifier, $.identifier),
-            //     optional(seq("+", $.number)),
-            //     ">",
-            // ),
-            //
-            // number: $ => /[0-9]+/,
-            //
-            // hexadecimal: $ => /0[xh][0-9a-fA-F]+/,
-
             source: $ => repeat($._line),
 
             _line: $ => seq(
