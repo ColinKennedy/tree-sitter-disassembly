@@ -1,4 +1,18 @@
 ================================================================================
+Bad Instruction
+================================================================================
+
+0x0000000000400674	61                           	(bad)
+
+--------------------------------------------------------------------------------
+
+(source
+  (address)
+  (machine_code_bytes
+    (byte))
+  (bad_instruction))
+
+================================================================================
 Bytes + Call 1
 ================================================================================
 
@@ -50,7 +64,7 @@ Code Caller C++ Template
   (address)
   (code_location
     (identifier)
-    (number))
+    (integer))
   (instruction))
 
 
@@ -66,7 +80,7 @@ Code Caller C++ operator>>
   (address)
   (code_location
     (identifier)
-    (number))
+    (integer))
   (instruction))
 
 
@@ -97,7 +111,7 @@ Code Caller C++ operator+ + Offset
   (address)
   (code_location
     (identifier)
-    (number))
+    (integer))
   (instruction))
 
 
@@ -113,7 +127,7 @@ Code Caller Location - System + Offset
   (address)
   (code_location
     (identifier)
-    (number))
+    (integer))
   (instruction))
 
 

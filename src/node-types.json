@@ -12,11 +12,16 @@
           "named": true
         },
         {
-          "type": "number",
+          "type": "integer",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "comment",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "machine_code_bytes",
@@ -69,6 +74,10 @@
     "named": false
   },
   {
+    "type": "#",
+    "named": false
+  },
+  {
     "type": "+",
     "named": false
   },
@@ -101,7 +110,7 @@
     "named": true
   },
   {
-    "type": "number",
+    "type": "integer",
     "named": true
   }
 ]

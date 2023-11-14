@@ -1,99 +1,104 @@
+0x0000000000400674	61                           	(bad)
+# <- number
+#                   ^ constant
+#                                                    ^ text.warning
+
 0x00000000004005cc	e8 7f fe ff ff         	callq  0x400450 <puts@plt>
-# <- asdfasdf
-#                   ^ asdf
-#                         ^ asdf
-#                               ^ asdf
-#                                           ^ tttt
-#                                                  ^ tttt
-#                                                           ^ tttt
+# <- number
+#                   ^ constant
+#                         ^ constant
+#                               ^ constant
+#                                           ^ function
+#                                                  ^ function
+#                                                           ^ function
 
 0x00000000004005a5	c7 45 ec 10 27 00 00   	movl   $0x2710,-0x14(%rbp)
-# <- asdfasdf
-#                   ^ asdf
-#                            ^ asdf
-#                                     ^ asdf
-#                                           ^ tttt
-#                                                  ^ tttt
-#                                                           ^ tttt
+# <- number
+#                   ^ constant
+#                            ^ constant
+#                                     ^ constant
+#                                           ^ function
+#                                                  ^ function
+#                                                           ^ function
 
 0x40056c <std::vector<Something>::get_foo(int, double)+1>     mov    %rsp,%rbp
-# <- asdfasdf
-#        ^ asdf
-#         ^ zzzzz
-#                    ^ zzzzz
-#                               ^ zzzzzz
-#                                                     ^ zzzzzz
-#                                                      ^ zzzzzz
-#                                                       ^ asdf
-#                                                             ^ bbbbbb
-#                                                                    ^ bbbbbb
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#                    ^ variable
+#                               ^ variable
+#                                                     ^ punctuation.delimiter
+#                                                      ^ number
+#                                                       ^ punctuation.special
+#                                                             ^ function
+#                                                                    ^ function
 
 0x40056c <std::ostream::operator>>(SomeClass)+30>     mov    %rsp,%rbp
-# <- asdfasdf
-#        ^ asdf
-#         ^ zzzzz
-#                              ^ zzzzzz
-#                               ^ zzzzzz
-#                                ^ zzzzzz
-#                                 ^ zzzzzz
-#                                             ^ tttttt
-#                                                     ^ bbbbbb
-#                                                             ^ bbbbbb
-#                                                                    ^ bbbbbb
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#                              ^ variable
+#                               ^ variable
+#                                ^ variable
+#                                 ^ variable
+#                                             ^ number
+#                                                     ^ function
+#                                                             ^ function
+#                                                                    ^ function
 
 0x40056c <std::ostream::operator+(int)>     mov    %rsp,%rbp
-# <- asdfasdf
-#        ^ asdf
-#         ^ zzzzz
-#                              ^ zzzzzz
-#                               ^ zzzzzz
-#                                ^ zzzzzz
-#                                    ^ zzzzzz
-#                                     ^ zzzzzz
-#                                           ^ tttttt
-#                                                  ^ ttttt
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#                              ^ variable
+#                               ^ variable
+#                                ^ variable
+#                                    ^ variable
+#                                     ^ punctuation.special
+#                                           ^ function
+#                                                  ^ function
 
 0x40056c <std::ostream::operator+(int)+10>     mov    %rsp,%rbp
-# <- asdfasdf
-#        ^ asdf
-#         ^ zzzzz
-#                              ^ zzzzzz
-#                               ^ zzzzzz
-#                                ^ zzzzzz
-#                                    ^ zzzzzz
-#                                     ^ zzzzzz
-#                                      ^ aaa
-#                                        ^ asdf
-#                                              ^ tttttt
-#                                                     ^ ttttt
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#                              ^ variable
+#                               ^ variable
+#                                ^ variable
+#                                    ^ variable
+#                                     ^ punctuation.delimiter
+#                                      ^ number
+#                                        ^ punctuation.special
+#                                              ^ function
+#                                                     ^ function
 
 0x40056c <main()+1>     mov    %rsp,%rbp
-# <- asdfasdf
-#        ^ asdf
-#         ^ zzzzz
-#              ^ zzzzzz
-#               ^ zzzzzz
-#                ^ bbb
-#                 ^ asdf
-#                       ^ tttttttt
-#                              ^ tttttttt
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#              ^ variable
+#               ^ punctuation.delimiter
+#                ^ number
+#                 ^ punctuation.special
+#                       ^ function
+#                              ^ function
 
 0x400601 <__libc_csu_init>   sub    %r12,%rbp
-# <- asdfasdf
-#        ^ asdf
-#         ^ zzzzz
-#                       ^ zzzzzz
-#                        ^ asdf
-#                            ^ tttttttt
-#                              ^ tttttttt
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#                       ^ variable
+#                        ^ punctuation.special
+#                            ^ function
+#                                   ^ function
 
 0x400601 <__libc_csu_init+33>   sub    %r12,%rbp
-# <- asdfasdf
-#        ^ asdf
-#         ^ zzzzz
-#                       ^ zzzzzz
-#                        ^ bbbbbbb
-#                         ^ aaaaaaaa
-#                           ^ asdf
-#                               ^ tttttttt
-#                                      ^ tttttttt
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#                       ^ variable
+#                        ^ punctuation.delimiter
+#                         ^ number
+#                           ^ punctuation.special
+#                               ^ function
+#                                      ^ function

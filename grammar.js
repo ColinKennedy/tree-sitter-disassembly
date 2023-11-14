@@ -23,6 +23,11 @@ module.exports = grammar(
             $.code_identifier,
         ],
 
+        extras: $ => [
+            $.comment,
+            /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/
+        ],
+
         rules: {
             source: $ => repeat($._line),
 
@@ -35,17 +40,19 @@ module.exports = grammar(
             code_location: $ => seq(
                 "<",
                 alias($.code_identifier, $.identifier),
-                optional(seq("+", $.number)),
+                optional(seq("+", $.integer)),
                 ">",
             ),
 
             machine_code_bytes: $ => space_separated1($.byte),
             hexadecimal: $ => /0[xh][0-9a-fA-F]+/,
-            number: $ => /[0-9]+/,
+            integer: $ => /[0-9]+/,
             byte: $ => /[0-9a-fA-F]{2}/,
 
             instruction: $ => /[^\n#]+/,
             bad_instruction: $ => "(bad)",
+
+            comment: $ => seq("#", /[^\n]*/),
         }
     }
 )
