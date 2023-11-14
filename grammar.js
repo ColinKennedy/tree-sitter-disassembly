@@ -28,7 +28,9 @@ module.exports = grammar(
 
             _line: $ => seq(
                 alias($.hexadecimal, $.address),
-                optional(choice($.code_location, $.machine_code_bytes)),
+                $.machine_code_bytes,
+                // TODO: Finish this
+                // optional(choice($.code_location, $.machine_code_bytes)),
                 choice($.bad_instruction, $.instruction),
             ),
 
@@ -39,11 +41,11 @@ module.exports = grammar(
                 ">",
             ),
 
-            byte: $ => /[0-9a-fA-F]{2}/,
             hexadecimal: $ => /0[xh][0-9a-fA-F]+/,
             machine_code_bytes: $ => space_separated1($.byte),
+            byte: $ => /[0-9a-fA-F]{2}/,
 
-            instruction: $ => /[^\n#<]+/,
+            instruction: $ => /[^\n#]+/,
             bad_instruction: $ => "(bad)",
         }
     }
