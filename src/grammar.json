@@ -41,7 +41,7 @@
                 },
                 {
                   "type": "PATTERN",
-                  "value": "\\s\\s+"
+                  "value": "\\s+"
                 },
                 {
                   "type": "SYMBOL",
@@ -159,19 +159,37 @@
       "value": "(bad)"
     },
     "comment": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "STRING",
-          "value": "#"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "#"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "hexadecimal"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[^\\n]*"
+            }
+          ]
         },
         {
-          "type": "SYMBOL",
-          "name": "hexadecimal"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[^\\n]*"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "#"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[^\\n]*"
+            }
+          ]
         }
       ]
     }

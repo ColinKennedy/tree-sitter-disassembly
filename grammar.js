@@ -34,7 +34,7 @@ module.exports = grammar(
             _line: $ => seq(
                 alias($.hexadecimal, $.address),
                 choice(
-                    seq(choice($.code_location, $.machine_code_bytes), /\s\s+/, $._instruction),
+                    seq(choice($.code_location, $.machine_code_bytes), /\s+/, $._instruction),
                     $._instruction,
                 ),
             ),
@@ -55,7 +55,10 @@ module.exports = grammar(
             instruction: $ => /[a-zA-Z]{2,}[^\n#]*/,
             bad_instruction: $ => "(bad)",
 
-            comment: $ => seq("#", $.hexadecimal, /[^\n]*/),
+            comment: $ => choice(
+                seq("#", $.hexadecimal, /[^\n]*/),
+                seq("#", /[^\n]*/),
+            ),
         }
     }
 )
