@@ -1,0 +1,153 @@
+{
+  "name": "disassembly",
+  "rules": {
+    "source": {
+      "type": "REPEAT",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_line"
+      }
+    },
+    "_line": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "hexadecimal"
+          },
+          "named": true,
+          "value": "address"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "code_location"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "machine_code_bytes"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "bad_instruction"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "instruction"
+            }
+          ]
+        }
+      ]
+    },
+    "code_location": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "<"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "code_identifier"
+          },
+          "named": true,
+          "value": "identifier"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "+"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "hexadecimal"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
+    "byte": {
+      "type": "PATTERN",
+      "value": "[0-9a-fA-F]{2}"
+    },
+    "hexadecimal": {
+      "type": "PATTERN",
+      "value": "0[xh][0-9a-fA-F]+"
+    },
+    "machine_code_bytes": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "byte"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": " "
+              },
+              {
+                "type": "SYMBOL",
+                "name": "byte"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "instruction": {
+      "type": "PATTERN",
+      "value": "[^\\n#<]+"
+    },
+    "bad_instruction": {
+      "type": "STRING",
+      "value": "(bad)"
+    }
+  },
+  "extras": [
+    {
+      "type": "PATTERN",
+      "value": "\\s"
+    }
+  ],
+  "conflicts": [],
+  "precedences": [],
+  "externals": [
+    {
+      "type": "SYMBOL",
+      "name": "code_identifier"
+    }
+  ],
+  "inline": [],
+  "supertypes": []
+}
+
