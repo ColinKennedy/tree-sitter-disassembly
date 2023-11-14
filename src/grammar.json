@@ -21,25 +21,8 @@
           "value": "address"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "code_location"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "machine_code_bytes"
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "code_location"
         },
         {
           "type": "CHOICE",

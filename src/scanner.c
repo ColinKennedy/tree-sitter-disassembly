@@ -24,8 +24,29 @@ enum TokenType {
 };
 
 
+static bool is_number_character(char character) {
+    switch (character) {
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            return true;
+        default:
+            return false;
+    }
+}
+
+
 static bool scan_code_identifier(TSLexer *lexer) {
+    bool has_hexadecimal_data = false;
     bool has_text = false;
+    bool possibly_in_next_hexadecimal_token = false;
 
     while (true) {
         if (lexer->lookahead == '\n' || lexer->eof(lexer)) {
@@ -34,10 +55,32 @@ static bool scan_code_identifier(TSLexer *lexer) {
             return has_text;
         }
 
+        if (possibly_in_next_hexadecimal_token) {
+            if (is_number_character(lexer->lookahead)) {
+                has_hexadecimal_data = true;
+            } else {
+                // Reached the end of the (possibly) hexadecimal data
+                possibly_in_next_hexadecimal_token = false;
+            }
+        }
+
         switch (lexer->lookahead) {
             case '+':
-            case '>':
+                // We might have reached the end. Or it could be some kind of
+                // C++ operator+() signature. Not sure which, just yet
+                //
                 lexer->mark_end(lexer);
+
+                possibly_in_next_hexadecimal_token = true;
+
+                break;
+            case '>':
+                if (!has_hexadecimal_data && !possibly_in_next_hexadecimal_token) {
+                    // We might have reached the end. Or it could be some kind of
+                    // C++ operator>>() signature. Not sure which, just yet
+                    //
+                    lexer->mark_end(lexer);
+                }
 
                 break;
         }
