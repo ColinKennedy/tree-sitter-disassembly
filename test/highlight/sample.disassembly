@@ -102,3 +102,13 @@
 #                           ^ punctuation.special
 #                               ^ function
 #                                      ^ function
+#
+
+0x400645                        nop
+# <- number
+#                               ^ function
+
+0x4005d8                        nopl   0x0(%rax,%rax,1)
+# <- number
+#                               ^ function
+#                                      ^ function
