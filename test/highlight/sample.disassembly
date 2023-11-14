@@ -1,0 +1,99 @@
+0x00000000004005cc	e8 7f fe ff ff         	callq  0x400450 <puts@plt>
+# <- asdfasdf
+#                   ^ asdf
+#                         ^ asdf
+#                               ^ asdf
+#                                           ^ tttt
+#                                                  ^ tttt
+#                                                           ^ tttt
+
+0x00000000004005a5	c7 45 ec 10 27 00 00   	movl   $0x2710,-0x14(%rbp)
+# <- asdfasdf
+#                   ^ asdf
+#                            ^ asdf
+#                                     ^ asdf
+#                                           ^ tttt
+#                                                  ^ tttt
+#                                                           ^ tttt
+
+0x40056c <std::vector<Something>::get_foo(int, double)+1>     mov    %rsp,%rbp
+# <- asdfasdf
+#        ^ asdf
+#         ^ zzzzz
+#                    ^ zzzzz
+#                               ^ zzzzzz
+#                                                     ^ zzzzzz
+#                                                      ^ zzzzzz
+#                                                       ^ asdf
+#                                                             ^ bbbbbb
+#                                                                    ^ bbbbbb
+
+0x40056c <std::ostream::operator>>(SomeClass)+30>     mov    %rsp,%rbp
+# <- asdfasdf
+#        ^ asdf
+#         ^ zzzzz
+#                              ^ zzzzzz
+#                               ^ zzzzzz
+#                                ^ zzzzzz
+#                                 ^ zzzzzz
+#                                             ^ tttttt
+#                                                     ^ bbbbbb
+#                                                             ^ bbbbbb
+#                                                                    ^ bbbbbb
+
+0x40056c <std::ostream::operator+(int)>     mov    %rsp,%rbp
+# <- asdfasdf
+#        ^ asdf
+#         ^ zzzzz
+#                              ^ zzzzzz
+#                               ^ zzzzzz
+#                                ^ zzzzzz
+#                                    ^ zzzzzz
+#                                     ^ zzzzzz
+#                                           ^ tttttt
+#                                                  ^ ttttt
+
+0x40056c <std::ostream::operator+(int)+10>     mov    %rsp,%rbp
+# <- asdfasdf
+#        ^ asdf
+#         ^ zzzzz
+#                              ^ zzzzzz
+#                               ^ zzzzzz
+#                                ^ zzzzzz
+#                                    ^ zzzzzz
+#                                     ^ zzzzzz
+#                                      ^ aaa
+#                                        ^ asdf
+#                                              ^ tttttt
+#                                                     ^ ttttt
+
+0x40056c <main()+1>     mov    %rsp,%rbp
+# <- asdfasdf
+#        ^ asdf
+#         ^ zzzzz
+#              ^ zzzzzz
+#               ^ zzzzzz
+#                ^ bbb
+#                 ^ asdf
+#                       ^ tttttttt
+#                              ^ tttttttt
+
+0x400601 <__libc_csu_init>   sub    %r12,%rbp
+# <- asdfasdf
+#        ^ asdf
+#         ^ zzzzz
+#                       ^ zzzzzz
+#                        ^ asdf
+#                            ^ tttttttt
+#                              ^ tttttttt
+
+0x400601 <__libc_csu_init+33>   sub    %r12,%rbp
+# <- asdfasdf
+#        ^ asdf
+#         ^ zzzzz
+#                       ^ zzzzzz
+#                        ^ bbbbbbb
+#                         ^ aaaaaaaa
+#                           ^ asdf
+#                               ^ tttttttt
+#                                      ^ tttttttt
