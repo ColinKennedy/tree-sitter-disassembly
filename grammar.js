@@ -33,8 +33,10 @@ module.exports = grammar(
 
             _line: $ => seq(
                 alias($.hexadecimal, $.address),
-                choice($.code_location, $.machine_code_bytes),
-                choice($.bad_instruction, $.instruction),
+                choice(
+                    seq(choice($.code_location, $.machine_code_bytes), /\s\s+/, $._instruction),
+                    $._instruction,
+                ),
             ),
 
             code_location: $ => seq(
@@ -49,7 +51,8 @@ module.exports = grammar(
             integer: $ => /[0-9]+/,
             byte: $ => /[0-9a-fA-F]{2}/,
 
-            instruction: $ => /[^\n#]+/,
+            _instruction: $ => choice($.bad_instruction, $.instruction),
+            instruction: $ => /[a-zA-Z]{2,}[^\n]*/,
             bad_instruction: $ => "(bad)",
 
             comment: $ => seq("#", /[^\n]*/),

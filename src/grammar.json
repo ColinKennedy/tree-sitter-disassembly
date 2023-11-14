@@ -24,25 +24,34 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "code_location"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "code_location"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "machine_code_bytes"
+                    }
+                  ]
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "\\s\\s+"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_instruction"
+                }
+              ]
             },
             {
               "type": "SYMBOL",
-              "name": "machine_code_bytes"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "bad_instruction"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "instruction"
+              "name": "_instruction"
             }
           ]
         }
@@ -128,9 +137,22 @@
       "type": "PATTERN",
       "value": "[0-9a-fA-F]{2}"
     },
+    "_instruction": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "bad_instruction"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "instruction"
+        }
+      ]
+    },
     "instruction": {
       "type": "PATTERN",
-      "value": "[^\\n#]+"
+      "value": "[a-zA-Z]{2,}[^\\n]*"
     },
     "bad_instruction": {
       "type": "STRING",
