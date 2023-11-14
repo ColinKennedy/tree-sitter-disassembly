@@ -19,6 +19,21 @@
     }
   },
   {
+    "type": "machine_code_bytes",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "byte",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "source",
     "named": true,
     "fields": {},
@@ -40,6 +55,10 @@
         },
         {
           "type": "instruction",
+          "named": true
+        },
+        {
+          "type": "machine_code_bytes",
           "named": true
         }
       ]

@@ -41,8 +41,7 @@ module.exports = grammar(
 
             _line: $ => seq(
                 alias($.hexadecimal, $.address),
-                $.code_location,
-                // optional(choice($.code_location, $.machine_code_bytes)),
+                choice($.code_location, $.machine_code_bytes),
                 choice($.bad_instruction, $.instruction),
             ),
 
