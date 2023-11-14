@@ -1,5 +1,24 @@
 [
   {
+    "type": "code_location",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "hexadecimal",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "machine_code_bytes",
     "named": true,
     "fields": {},
@@ -28,6 +47,10 @@
         },
         {
           "type": "bad_instruction",
+          "named": true
+        },
+        {
+          "type": "code_location",
           "named": true
         },
         {

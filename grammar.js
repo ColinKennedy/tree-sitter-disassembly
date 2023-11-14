@@ -28,8 +28,10 @@ module.exports = grammar(
 
             _line: $ => seq(
                 alias($.hexadecimal, $.address),
-                $.machine_code_bytes,
+                optional(choice($.code_location, $.machine_code_bytes)),
                 // TODO: Finish this
+                // $.machine_code_bytes,
+                // choice($.code_location, $.machine_code_bytes),
                 // optional(choice($.code_location, $.machine_code_bytes)),
                 choice($.bad_instruction, $.instruction),
             ),
