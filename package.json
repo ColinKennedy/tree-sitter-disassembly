@@ -27,10 +27,10 @@
     "tree-sitter": [
         {
             "file-types": [
-                "objdump"
+                "disassembly"
             ],
-            "injection-regex": "objdump",
-            "scope": "source.objdump"
+            "injection-regex": "disassembly",
+            "scope": "source.disassembly"
         }
     ],
     "version": "1.0.0"
