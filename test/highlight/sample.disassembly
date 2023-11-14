@@ -1,0 +1,130 @@
+0x0000000000400674      61                              (bad)
+# <- number
+#                       ^ constant
+#                                                       ^ text.warning
+
+0x00000000004005cc      e8 7f fe ff ff          callq  0x400450 <puts@plt>
+# <- number
+#                       ^ constant
+#                             ^ constant
+#                                   ^ constant
+#                                               ^ function
+#                                                      ^ function
+#                                                               ^ function
+
+0x00000000004005a5      c7 45 ec 10 27 00 00    movl   $0x2710,-0x14(%rbp)
+# <- number
+#                       ^ constant
+#                                ^ constant
+#                                         ^ constant
+#                                               ^ function
+#                                                      ^ function
+#                                                               ^ function
+
+0x40056c <std::vector<Something>::get_foo(int, double)+1>     mov    %rsp,%rbp
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#                    ^ variable
+#                               ^ variable
+#                                                     ^ punctuation.delimiter
+#                                                      ^ number
+#                                                       ^ punctuation.special
+#                                                             ^ function
+#                                                                    ^ function
+
+0x40056c <std::ostream::operator>>(SomeClass)+30>     mov    %rsp,%rbp
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#                              ^ variable
+#                               ^ variable
+#                                ^ variable
+#                                 ^ variable
+#                                             ^ number
+#                                                     ^ function
+#                                                             ^ function
+#                                                                    ^ function
+
+0x40056c <std::ostream::operator+(int)>     mov    %rsp,%rbp
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#                              ^ variable
+#                               ^ variable
+#                                ^ variable
+#                                    ^ variable
+#                                     ^ punctuation.special
+#                                           ^ function
+#                                                  ^ function
+
+0x40056c <std::ostream::operator+(int)+10>     mov    %rsp,%rbp
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#                              ^ variable
+#                               ^ variable
+#                                ^ variable
+#                                    ^ variable
+#                                     ^ punctuation.delimiter
+#                                      ^ number
+#                                        ^ punctuation.special
+#                                              ^ function
+#                                                     ^ function
+
+0x40056c <main()+1>     mov    %rsp,%rbp
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#              ^ variable
+#               ^ punctuation.delimiter
+#                ^ number
+#                 ^ punctuation.special
+#                       ^ function
+#                              ^ function
+
+0x400601 <__libc_csu_init>   sub    %r12,%rbp
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#                       ^ variable
+#                        ^ punctuation.special
+#                            ^ function
+#                                   ^ function
+
+0x400601 <__libc_csu_init+33>   sub    %r12,%rbp
+# <- number
+#        ^ punctuation.special
+#         ^ variable
+#                       ^ variable
+#                        ^ punctuation.delimiter
+#                         ^ number
+#                           ^ punctuation.special
+#                               ^ function
+#                                      ^ function
+
+0x400645                        nop
+# <- number
+#                               ^ function
+
+0x4005d8                        nopl   0x0(%rax,%rax,1)
+# <- number
+#                               ^ function
+#                                      ^ function
+
+0x00000000004005f1      4c 8d 25 e8 07 20 00    lea    0x2007e8(%rip),%r12        # 0x600de0
+# <- number
+#                                               ^ function
+#                                                      ^ function
+#                                                                                   ^ number
+
+0x00000000004005f1      4c 8d 25 e8 07 20 00    lea    0x2007e8(%rip),%r12        # 0x600de0
+# <- number
+#                                               ^ function
+#                                                      ^ function
+#                                                                                   ^ number
+
+0x00000000004003b3      00 01                   add    %al,(%rcx)
+# <- number
+#                                               ^ function
+#                                                      ^ function
