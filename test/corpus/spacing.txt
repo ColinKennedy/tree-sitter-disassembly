@@ -44,3 +44,24 @@ Spacing - No Space Between Bytes And Instructions 2
     (byte)
     (byte))
   (instruction))
+
+
+================================================================================
+Spacing - Only Spaces, No Tabs
+================================================================================
+
+0x0000000000400510     80 3d 1d 0b 20 00 00    cmpb   $0x0,0x200b1d(%rip)
+
+--------------------------------------------------------------------------------
+
+(source
+  (address)
+  (machine_code_bytes
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte))
+  (instruction))
