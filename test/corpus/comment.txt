@@ -6,7 +6,19 @@ Comment With Hexadecimal 1
 
 --------------------------------------------------------------------------------
 
-(source)
+(source
+  (address)
+  (machine_code_bytes
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte))
+  (instruction)
+  (comment
+    (hexadecimal)))
 
 
 ================================================================================
@@ -17,4 +29,16 @@ Comment With Hexadecimal 2
 
 --------------------------------------------------------------------------------
 
-(source)
+(source
+  (address)
+  (machine_code_bytes
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte))
+  (instruction)
+  (comment
+    (hexadecimal)))

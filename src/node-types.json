@@ -21,7 +21,17 @@
   {
     "type": "comment",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "hexadecimal",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "machine_code_bytes",
@@ -99,6 +109,10 @@
   },
   {
     "type": "byte",
+    "named": true
+  },
+  {
+    "type": "hexadecimal",
     "named": true
   },
   {

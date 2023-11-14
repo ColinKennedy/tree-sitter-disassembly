@@ -52,10 +52,10 @@ module.exports = grammar(
             byte: $ => /[0-9a-fA-F]{2}/,
 
             _instruction: $ => choice($.bad_instruction, $.instruction),
-            instruction: $ => /[a-zA-Z]{2,}[^\n]*/,
+            instruction: $ => /[a-zA-Z]{2,}[^\n#]*/,
             bad_instruction: $ => "(bad)",
 
-            comment: $ => seq("#", /[^\n]*/),
+            comment: $ => seq("#", $.hexadecimal, /[^\n]*/),
         }
     }
 )

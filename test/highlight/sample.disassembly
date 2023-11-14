@@ -112,3 +112,17 @@
 # <- number
 #                               ^ function
 #                                      ^ function
+
+0x00000000004005f1	4c 8d 25 e8 07 20 00   	lea    0x2007e8(%rip),%r12        # 0x600de0
+# <- number
+#                                           ^ function
+#                                                  ^ function
+#                                                                             ^ comment
+#                                                                               ^ hexadecimal
+
+0x00000000004005f1	4c 8d 25 e8 07 20 00   	lea    0x2007e8(%rip),%r12        # 0x600de0
+# <- number
+#                                           ^ function
+#                                                  ^ function
+#                                                                             ^ comment
+#                                                                               ^ hexadecimal

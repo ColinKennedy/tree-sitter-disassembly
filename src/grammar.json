@@ -152,7 +152,7 @@
     },
     "instruction": {
       "type": "PATTERN",
-      "value": "[a-zA-Z]{2,}[^\\n]*"
+      "value": "[a-zA-Z]{2,}[^\\n#]*"
     },
     "bad_instruction": {
       "type": "STRING",
@@ -164,6 +164,10 @@
         {
           "type": "STRING",
           "value": "#"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "hexadecimal"
         },
         {
           "type": "PATTERN",
