@@ -65,10 +65,21 @@ static bool scan_code_identifier(TSLexer *lexer) {
         }
 
         if (is_maybe_at_end && lexer->lookahead != '\n' && iswspace(lexer->lookahead)) {
+            // We assume that, following a > or + character, there cannot be whitespace.
+            // If there is whitespace then that means we've reached the end of the match
+            // and it's time to exit
+            //
+            lexer->result_symbol = CODE_IDENTIFIER;
+
             return has_text;
         }
 
         switch (lexer->lookahead) {
+            case '#':
+                // We've reached the end of the instruction and the start of a comment
+                lexer->result_symbol = CODE_IDENTIFIER;
+
+                return has_text;
             case '+':
                 // We might have reached the end. Or it could be some kind of
                 // C++ operator+() signature. Not sure which, just yet
