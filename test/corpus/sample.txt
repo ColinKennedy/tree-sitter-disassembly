@@ -57,7 +57,12 @@ Code Caller C++ operator>>
 
 --------------------------------------------------------------------------------
 
-(source)
+(source
+  (address)
+  (code_location
+    (identifier)
+    (number))
+  (instruction))
 
 
 ================================================================================
@@ -83,7 +88,12 @@ Code Caller C++ operator+ + Offset
 
 --------------------------------------------------------------------------------
 
-(source)
+(source
+  (address)
+  (code_location
+    (identifier)
+    (number))
+  (instruction))
 
 
 ================================================================================
@@ -97,7 +107,8 @@ Code Caller Location - System + Offset
 (source
   (address)
   (code_location
-    (identifier))
+    (identifier)
+    (number))
   (instruction))
 
 
@@ -128,7 +139,7 @@ Code Location - System + Offset 2
   (address)
   (code_location
     (identifier)
-    (hexadecimal))
+    (number))
   (instruction))
 
 

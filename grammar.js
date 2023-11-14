@@ -24,6 +24,19 @@ module.exports = grammar(
         ],
 
         rules: {
+            // source: $ => $.code_location,
+            //
+            // code_location: $ => seq(
+            //     "<",
+            //     alias($.code_identifier, $.identifier),
+            //     optional(seq("+", $.number)),
+            //     ">",
+            // ),
+            //
+            // number: $ => /[0-9]+/,
+            //
+            // hexadecimal: $ => /0[xh][0-9a-fA-F]+/,
+
             source: $ => repeat($._line),
 
             _line: $ => seq(
@@ -36,12 +49,13 @@ module.exports = grammar(
             code_location: $ => seq(
                 "<",
                 alias($.code_identifier, $.identifier),
-                optional(seq("+", $.hexadecimal)),
+                optional(seq("+", $.number)),
                 ">",
             ),
 
-            hexadecimal: $ => /0[xh][0-9a-fA-F]+/,
             machine_code_bytes: $ => space_separated1($.byte),
+            hexadecimal: $ => /0[xh][0-9a-fA-F]+/,
+            number: $ => /[0-9]+/,
             byte: $ => /[0-9a-fA-F]{2}/,
 
             instruction: $ => /[^\n#]+/,

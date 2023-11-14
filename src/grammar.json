@@ -67,7 +67,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "hexadecimal"
+                  "name": "number"
                 }
               ]
             },
@@ -81,10 +81,6 @@
           "value": ">"
         }
       ]
-    },
-    "hexadecimal": {
-      "type": "PATTERN",
-      "value": "0[xh][0-9a-fA-F]+"
     },
     "machine_code_bytes": {
       "type": "SEQ",
@@ -110,6 +106,14 @@
           }
         }
       ]
+    },
+    "hexadecimal": {
+      "type": "PATTERN",
+      "value": "0[xh][0-9a-fA-F]+"
+    },
+    "number": {
+      "type": "PATTERN",
+      "value": "[0-9]+"
     },
     "byte": {
       "type": "PATTERN",

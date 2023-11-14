@@ -45,6 +45,7 @@ static bool is_number_character(char character) {
 static bool scan_code_identifier(TSLexer *lexer) {
     bool has_hexadecimal_data = false;
     bool has_text = false;
+    bool is_maybe_at_end = false;
     bool possibly_in_next_hexadecimal_token = false;
 
     while (true) {
@@ -63,6 +64,10 @@ static bool scan_code_identifier(TSLexer *lexer) {
             }
         }
 
+        if (is_maybe_at_end && lexer->lookahead != '\n' && iswspace(lexer->lookahead)) {
+            return has_text;
+        }
+
         switch (lexer->lookahead) {
             case '+':
                 // We might have reached the end. Or it could be some kind of
@@ -71,6 +76,7 @@ static bool scan_code_identifier(TSLexer *lexer) {
                 lexer->mark_end(lexer);
 
                 possibly_in_next_hexadecimal_token = true;
+                is_maybe_at_end = true;
 
                 break;
             case '>':
@@ -80,6 +86,12 @@ static bool scan_code_identifier(TSLexer *lexer) {
                     //
                     lexer->mark_end(lexer);
                 }
+
+                is_maybe_at_end = true;
+
+                break;
+            default:
+                is_maybe_at_end = false;
 
                 break;
         }

@@ -8,11 +8,11 @@
       "required": true,
       "types": [
         {
-          "type": "hexadecimal",
+          "type": "identifier",
           "named": true
         },
         {
-          "type": "identifier",
+          "type": "number",
           "named": true
         }
       ]
@@ -74,15 +74,15 @@
     "named": true
   },
   {
-    "type": "hexadecimal",
-    "named": true
-  },
-  {
     "type": "identifier",
     "named": true
   },
   {
     "type": "instruction",
+    "named": true
+  },
+  {
+    "type": "number",
     "named": true
   }
 ]
