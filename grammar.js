@@ -35,9 +35,10 @@ module.exports = grammar(
 
             _line: $ => seq(
                 alias($.hexadecimal, $.address),
+                optional(":"),
                 choice(
-                    seq(choice($.code_location, $.machine_code_bytes), $._instruction),
-                    $._instruction,
+                    $._line_with_full_data,
+                    $._line_with_missing_data,
                 ),
                 $._new_line,
             ),
@@ -45,23 +46,33 @@ module.exports = grammar(
             code_location: $ => seq(
                 "<",
                 alias($.code_identifier, $.identifier),
-                optional(seq("+", $.integer)),
+                optional(seq("+", choice($.hexadecimal, $.integer))),
                 ">",
             ),
 
             machine_code_bytes: $ => repeat1($.byte),
-            hexadecimal: $ => /0[xh][0-9a-fA-F]+/,
             integer: $ => /[0-9]+/,
+            hexadecimal: $ => /(0[xh])?[0-9a-fA-F]+/,
             byte: $ => /[0-9a-fA-F]{2}/,
 
-            _instruction: $ => choice($.bad_instruction, $.instruction),
+            _line_with_full_data: $ => seq(
+                choice($.code_location, $.machine_code_bytes),
+                $._line_with_missing_data,
+                optional(alias($._annotated_comment, $.comment))
+            ),
+            _line_with_missing_data: $ => choice($.bad_instruction, $.instruction),
+
             bad_instruction: $ => "(bad)",
             _new_line: $ => "\n",
 
-            comment: $ => choice(
-                seq("#", $.hexadecimal, /[^\n]*/),  // Actual Disassembly comment
-                seq("#", choice(seq("^", $._word), seq("<-", $._word))),  // Tree-sitter unittest comment
+            _annotated_comment: $ => choice(
+                seq(
+                    "#",
+                    repeat(choice($.hexadecimal, $.integer, $.code_location, $._word)),
+                ),
             ),
+
+            comment: $ => seq("#", /.*/),  // Tree-sitter unittest comment
             _word: $ => /[a-zA-Z0-9\.]+/,
         }
     }

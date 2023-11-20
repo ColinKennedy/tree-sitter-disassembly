@@ -8,6 +8,10 @@
       "required": true,
       "types": [
         {
+          "type": "hexadecimal",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -23,11 +27,19 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
+          "type": "code_location",
+          "named": true
+        },
+        {
           "type": "hexadecimal",
+          "named": true
+        },
+        {
+          "type": "integer",
           "named": true
         }
       ]
@@ -69,6 +81,10 @@
           "named": true
         },
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "instruction",
           "named": true
         },
@@ -88,19 +104,15 @@
     "named": false
   },
   {
+    "type": ":",
+    "named": false
+  },
+  {
     "type": "<",
     "named": false
   },
   {
-    "type": "<-",
-    "named": false
-  },
-  {
     "type": ">",
-    "named": false
-  },
-  {
-    "type": "^",
     "named": false
   },
   {

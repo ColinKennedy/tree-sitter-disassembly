@@ -14,4 +14,4 @@
 (instruction) @function
 
 ["<" ">"] @punctuation.special
-["+"] @punctuation.delimiter
+["+" ":"] @punctuation.delimiter
