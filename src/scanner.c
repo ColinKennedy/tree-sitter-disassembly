@@ -104,6 +104,11 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
     char bad_instruction[] = "(bad)";
     unsigned int const size = (sizeof(bad_instruction) / sizeof(char) - 1);
 
+    if (lexer->lookahead == ':')
+    {
+        return false;
+    }
+
     while (true) {
         if (!has_text && lexer->lookahead == '<') {
             // We're actually inside of a code location or something other than

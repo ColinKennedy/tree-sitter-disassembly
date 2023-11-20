@@ -128,3 +128,15 @@
 # <- number
 #                                               ^ function
 #                                                      ^ function
+
+462b12:       4c 8b 2d b7 74 25 00    mov    0x2574b7(%rip),%r13        # 6b9fd0 <iconv_open@plt+0x2b7330>
+# <- number
+#     ^ punctuation.delimiter
+#             ^ constant
+#                      ^ constant
+#                               ^ constant
+#                                            ^ function
+#                                                                         ^ number
+#                                                                                 ^ variable
+#                                                                                               ^ punctuation.delimiter
+#                                                                                                ^ number
