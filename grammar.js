@@ -51,9 +51,9 @@ module.exports = grammar(
             ),
 
             machine_code_bytes: $ => repeat1($.byte),
-            integer: $ => /[0-9]+/,
-            hexadecimal: $ => /(0[xh])?[0-9a-fA-F]+/,
-            byte: $ => /[0-9a-fA-F]{2}/,
+            integer: _ => /[0-9]+/,
+            hexadecimal: _ => /(0[xh])?[0-9a-fA-F]+/,
+            byte: _ => /[0-9a-fA-F]{2}/,
 
             _line_with_full_data: $ => seq(
                 choice($.code_location, $.machine_code_bytes),
@@ -62,8 +62,8 @@ module.exports = grammar(
             ),
             _line_with_missing_data: $ => choice($.bad_instruction, $.instruction),
 
-            bad_instruction: $ => "(bad)",
-            _new_line: $ => "\n",
+            bad_instruction: _ => "(bad)",
+            _new_line: _ => "\n",
 
             _annotated_comment: $ => choice(
                 seq(
@@ -72,8 +72,8 @@ module.exports = grammar(
                 ),
             ),
 
-            comment: $ => seq("#", /.*/),  // Tree-sitter unittest comment
-            _word: $ => /[a-zA-Z0-9\.]+/,
+            comment: _ => seq("#", /.*/),  // Tree-sitter unittest comment
+            _word: _ => /[a-zA-Z0-9\.]+/,
         }
     }
 )
