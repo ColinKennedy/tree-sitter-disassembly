@@ -22,6 +22,7 @@ module.exports = grammar(
         externals: $ => [
             $.code_identifier,
             $.instruction,
+            $.memory_dump,
             $._error_sentinel,
         ],
 
@@ -60,7 +61,7 @@ module.exports = grammar(
                 $._line_with_missing_data,
                 optional(alias($._annotated_comment, $.comment))
             ),
-            _line_with_missing_data: $ => choice($.bad_instruction, $.instruction),
+            _line_with_missing_data: $ => choice($.memory_dump, $.bad_instruction, $.instruction),
 
             bad_instruction: _ => "(bad)",
             _new_line: _ => "\n",
