@@ -75,6 +75,26 @@ static bool is_number_character(char character) {
 }
 
 
+static bool scan_memory_dump(TSLexer *lexer)
+{
+    while (true) {
+        // printf("%c", lexer->lookahead);
+        lexer->advance(lexer, false);
+
+        if (lexer->lookahead == '\n' || lexer->eof(lexer)) {
+            // The line ended. Stop scanning
+            // printf("\n\nreached end\n\n");
+            lexer->mark_end(lexer);
+            lexer->result_symbol = MEMORY_DUMP;
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 /// \brief Check if the lexer is looking at an Assembly instruction.
 ///
 /// The main variants to look out for are
@@ -119,26 +139,18 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
         {
             // printf("\n\nfound memory. Parsing\n\n");
 
-            while (true) {
-                // printf("%c", lexer->lookahead);
-                lexer->advance(lexer, false);
-
-                if (lexer->lookahead == '\n' || lexer->eof(lexer)) {
-                    // The line ended. Stop scanning
-                    // printf("\n\nreached end\n\n");
-                    lexer->mark_end(lexer);
-                    lexer->result_symbol = MEMORY_DUMP;
-
-                    return true;
-                }
-            }
+            return scan_memory_dump(lexer);
         }
 
         if (!has_text && lexer->lookahead == '<') {
-            // We're actually inside of a code location or something other than
-            // an Assembly instruction. Back out
+            // We're either
             //
-            return false;
+            // 1. Inside of a code location or something other than an Assembly instruction
+            // 2. It could be a a disassembly memory dump like `0x0001 aa bb cc 00 ....`
+            //
+            // #1 must return false, #2 must return true. So we just test both, here.
+            //
+            return scan_memory_dump(lexer);
         }
 
         if (lexer->lookahead == '\n' || lexer->eof(lexer)) {
@@ -149,7 +161,7 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
             return has_text;
         }
 
-        if (lexer->lookahead == '#') {
+        if (lexer->lookahead == '#' || lexer->lookahead == ';') {
             // The start of a comment was found. Stop scanning
             lexer->mark_end(lexer);
             lexer->result_symbol = ASSEMBLY_INSTRUCTION;
@@ -244,6 +256,7 @@ static bool scan_code_identifier(TSLexer *lexer) {
         }
 
         switch (lexer->lookahead) {
+            case ';':
             case '#':
                 // We've reached the end of the instruction and the start of a comment
                 lexer->result_symbol = CODE_IDENTIFIER;
