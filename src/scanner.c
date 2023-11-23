@@ -21,9 +21,12 @@
 enum TokenType {
     CODE_IDENTIFIER,
     ASSEMBLY_INSTRUCTION,
+    MEMORY,
     ERROR_SENTINEL,
 };
 
+// TODO: try to make this dynamic later
+static int MEMORY_COLUMN_COUNT = 16;
 
 static bool is_hexadecimal_character(char character) {
     switch (character) {
@@ -95,6 +98,8 @@ static bool is_number_character(char character) {
 /// \return If an Assembly instruction was found, return `true`.
 ///
 static bool scan_assembly_instruction(TSLexer *lexer) {
+    int total_count = 0;
+    bool has_whitespace = false;
     bool has_text = false;
     bool is_maybe_bad_instruction = true;
     bool is_maybe_a_byte = true;
@@ -109,7 +114,27 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
         return false;
     }
 
+    printf("\n\nscan_instruction_start\n\n");
+
     while (true) {
+        printf("%c", lexer->lookahead);
+
+        bool is_whitespace = iswspace(lexer->lookahead);
+
+        if (!is_whitespace)
+        {
+            ++total_count;
+        }
+        else
+        {
+            has_whitespace = true;
+
+            if (has_text && lexer->lookahead != '\n')
+            {
+                ++total_count;
+            }
+        }
+
         if (!has_text && lexer->lookahead == '<') {
             // We're actually inside of a code location or something other than
             // an Assembly instruction. Back out
@@ -122,7 +147,10 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
             lexer->mark_end(lexer);
             lexer->result_symbol = ASSEMBLY_INSTRUCTION;
 
-            return has_text;
+            printf("\n\nat end. Lets count %d %d\n\n", total_count, (has_text && total_count != MEMORY_COLUMN_COUNT));
+
+            // TODO: this check isn't perfect. It needs a better check, later
+            return has_text && total_count != MEMORY_COLUMN_COUNT;
         }
 
         if (lexer->lookahead == '#') {
@@ -130,10 +158,9 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
             lexer->mark_end(lexer);
             lexer->result_symbol = ASSEMBLY_INSTRUCTION;
 
-            return has_text;
+            // TODO: this check isn't perfect. It needs a better check, later
+            return has_text && total_count != MEMORY_COLUMN_COUNT;
         }
-
-        bool is_whitespace = iswspace(lexer->lookahead);
 
         if (!is_whitespace) {
             if (is_maybe_bad_instruction && (lexer->lookahead == bad_instruction[offset_counter])) {
@@ -259,6 +286,37 @@ static bool scan_code_identifier(TSLexer *lexer) {
     return has_text;
 }
 
+static bool scan_memory(TSLexer *lexer) {
+    bool has_text = false;
+    int count = 0;
+
+    printf("\n\nscan_memory start\n\n");
+
+    while (true) {
+        printf("%c", lexer->lookahead);
+
+        if (!has_text && iswspace(lexer->lookahead))
+        {
+            lexer->advance(lexer, true);
+
+            continue;
+        }
+
+        if (lexer->lookahead == '\n' || lexer->eof(lexer)) {
+            lexer->result_symbol = MEMORY;
+
+            printf("\n\nscan_memory at end %d\n\n", count);
+            return count == MEMORY_COLUMN_COUNT;
+        }
+
+        ++count;
+        lexer->advance(lexer, false);
+    }
+
+    printf("\n\nescaped scan memory\n\n");
+    return false;
+}
+
 void *tree_sitter_disassembly_external_scanner_create() { return NULL; }
 
 void tree_sitter_disassembly_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {}
@@ -267,15 +325,32 @@ void tree_sitter_disassembly_external_scanner_destroy(void *payload) {}
 
 bool tree_sitter_disassembly_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
     if (valid_symbols[ERROR_SENTINEL]) {
-        return false;
+        printf("\n\nEntered errored state\n\n");
+        return scan_memory(lexer);
     }
 
     if (valid_symbols[CODE_IDENTIFIER]) {
         return scan_code_identifier(lexer);
     }
 
+    if (valid_symbols[ASSEMBLY_INSTRUCTION] && valid_symbols[MEMORY]) {
+        printf("\n\ndoubled up\n\n");
+
+        return scan_memory(lexer);
+        // {
+        //     return true;
+        // }
+        //
+        // // TODO: Is this right? Seems wrong to me
+        // return scan_assembly_instruction(lexer);
+    }
+
     if (valid_symbols[ASSEMBLY_INSTRUCTION]) {
         return scan_assembly_instruction(lexer);
+    }
+
+    if (valid_symbols[MEMORY]) {
+        return scan_memory(lexer);
     }
 
     return false;

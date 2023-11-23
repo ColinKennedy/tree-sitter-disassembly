@@ -1,3 +1,8 @@
+- Make sure that raw data can be represented
+ - Highlighting: Unrepresentable bytes, `.`s, should be highlighted separately than the stuff that can be viewed
+ - Make the memory count mechanism dynamic. e.g. don't assume 16 characters
+
+
 # tree-sitter-disassembly
 This library parses disassembly text using
 [tree-sitter](https://tree-sitter.github.io/tree-sitter) to produce

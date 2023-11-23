@@ -37,6 +37,10 @@
           "members": [
             {
               "type": "SYMBOL",
+              "name": "memory"
+            },
+            {
+              "type": "SYMBOL",
               "name": "_line_with_full_data"
             },
             {
@@ -258,6 +262,10 @@
     {
       "type": "SYMBOL",
       "name": "instruction"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "memory"
     },
     {
       "type": "SYMBOL",

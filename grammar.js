@@ -22,6 +22,7 @@ module.exports = grammar(
         externals: $ => [
             $.code_identifier,
             $.instruction,
+            $.memory,
             $._error_sentinel,
         ],
 
@@ -37,6 +38,7 @@ module.exports = grammar(
                 alias($.hexadecimal, $.address),
                 optional(":"),
                 choice(
+                    $.memory,
                     $._line_with_full_data,
                     $._line_with_missing_data,
                 ),

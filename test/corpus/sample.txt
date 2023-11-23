@@ -74,3 +74,14 @@ Code Location - Instruction With Only Two Letters
     (identifier)
     (integer))
   (instruction))
+
+
+================================================================================
+Instruction With 16 Characters
+================================================================================
+
+0x00007FFFFFFFD038: 3C DB FF FF FF 7F 00 00  5D DB FF FF FF 7F 00 00  mov rsp,[rbp+10]
+
+--------------------------------------------------------------------------------
+
+(source)

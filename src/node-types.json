@@ -91,6 +91,10 @@
         {
           "type": "machine_code_bytes",
           "named": true
+        },
+        {
+          "type": "memory",
+          "named": true
         }
       ]
     }
@@ -141,6 +145,10 @@
   },
   {
     "type": "integer",
+    "named": true
+  },
+  {
+    "type": "memory",
     "named": true
   }
 ]
