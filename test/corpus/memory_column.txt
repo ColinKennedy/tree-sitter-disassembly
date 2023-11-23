@@ -137,7 +137,45 @@ Unrepresentable Memory - Miscellaneous Special Characters
 
 --------------------------------------------------------------------------------
 
-(source)
+(source
+  (address)
+  (machine_code_bytes
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte))
+  (memory_dump)
+  (address)
+  (machine_code_bytes
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte)
+    (byte))
+  (memory_dump))
 
 
 ================================================================================

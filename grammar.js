@@ -68,12 +68,12 @@ module.exports = grammar(
 
             _annotated_comment: $ => choice(
                 seq(
-                    "#",
+                    choice("#", ";"),
                     repeat(choice($.hexadecimal, $.integer, $.code_location, $._word)),
                 ),
             ),
 
-            comment: _ => seq("#", /.*/),  // Tree-sitter unittest comment
+            comment: _ => seq(choice("#", ";"), /.*/),  // Tree-sitter unittest comment
             _word: _ => /[a-zA-Z0-9\.]+/,
         }
     }
