@@ -107,18 +107,19 @@ Comment With Number 2
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction)
-  (comment
-    (hexadecimal)))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment
+      (hexadecimal))))
 
 
 ================================================================================
@@ -130,17 +131,18 @@ Comment With # - Empty
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction)
-  (comment))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment)))
 
 
 ================================================================================
@@ -152,17 +154,18 @@ Comment With ; And Text
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction)
-  (comment))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment)))
 
 
 ================================================================================
@@ -174,18 +177,19 @@ Comment With ; And Number
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction)
-  (comment
-    (hexadecimal)))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment
+      (hexadecimal))))
 
 
 ================================================================================
@@ -197,14 +201,15 @@ Comment With ; - Empty
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction)
-  (comment))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment)))
