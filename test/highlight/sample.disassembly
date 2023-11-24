@@ -136,6 +136,7 @@
 #                      ^ constant
 #                               ^ constant
 #                                            ^ function
+#                                                                       ^ comment
 #                                                                         ^ number
 #                                                                                 ^ variable
 #                                                                                               ^ punctuation.delimiter

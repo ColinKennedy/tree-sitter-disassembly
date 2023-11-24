@@ -5,10 +5,10 @@
       "type": "REPEAT",
       "content": {
         "type": "SYMBOL",
-        "name": "_line"
+        "name": "source_location"
       }
     },
-    "_line": {
+    "source_location": {
       "type": "SEQ",
       "members": [
         {
@@ -120,7 +120,7 @@
     },
     "byte": {
       "type": "PATTERN",
-      "value": "[0-9a-fA-F]{2}"
+      "value": "[0-9a-fA-F]{8}|[0-9a-fA-F]{4}|[0-9a-fA-F]{2}"
     },
     "_line_with_full_data": {
       "type": "SEQ",
@@ -139,8 +139,21 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_line_with_missing_data"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "memory_dump"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "bad_instruction"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "instruction"
+            }
+          ]
         },
         {
           "type": "CHOICE",
@@ -189,8 +202,17 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "STRING",
-              "value": "#"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "#"
+                },
+                {
+                  "type": "STRING",
+                  "value": ";"
+                }
+              ]
             },
             {
               "type": "REPEAT",
@@ -212,6 +234,10 @@
                   {
                     "type": "SYMBOL",
                     "name": "_word"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_arm_address_comment"
                   }
                 ]
               }
@@ -220,12 +246,68 @@
         }
       ]
     },
-    "comment": {
+    "_arm_address_comment": {
       "type": "SEQ",
       "members": [
         {
           "type": "STRING",
-          "value": "#"
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[^\\d,][^,]+"
+                  },
+                  "named": true,
+                  "value": "instruction"
+                },
+                {
+                  "type": "STRING",
+                  "value": ","
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "hexadecimal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "code_location"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "comment": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "#"
+            },
+            {
+              "type": "STRING",
+              "value": ";"
+            }
+          ]
         },
         {
           "type": "PATTERN",
@@ -258,6 +340,10 @@
     {
       "type": "SYMBOL",
       "name": "instruction"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "memory_dump"
     },
     {
       "type": "SYMBOL",

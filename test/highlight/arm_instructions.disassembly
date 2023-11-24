@@ -1,0 +1,8 @@
+8000200:	b510      	push	{r4, lr}
+# <- number
+#                               ^ function
+
+8000202:	4c05      	ldr	r4, [pc, #20]	; (8000218 <__do_global_dtors_aux+0x18>)
+# <- number
+#                               ^ function
+#                                                ^ punctuation.special
