@@ -31,9 +31,9 @@ module.exports = grammar(
         ],
 
         rules: {
-            source: $ => repeat($._line),
+            source: $ => repeat($.source_location),
 
-            _line: $ => seq(
+            source_location: $ => seq(
                 alias($.hexadecimal, $.address),
                 optional(":"),
                 choice(

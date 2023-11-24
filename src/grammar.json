@@ -5,10 +5,10 @@
       "type": "REPEAT",
       "content": {
         "type": "SYMBOL",
-        "name": "_line"
+        "name": "source_location"
       }
     },
-    "_line": {
+    "source_location": {
       "type": "SEQ",
       "members": [
         {

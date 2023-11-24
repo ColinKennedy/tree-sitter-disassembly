@@ -7,10 +7,11 @@ Bad Instruction
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte))
-  (bad_instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte))
+    (bad_instruction)))
 
 
 ================================================================================
@@ -22,11 +23,12 @@ Code Caller Location - System + Offset
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (code_location
-    (identifier)
-    (integer))
-  (instruction))
+  (source_location
+    (address)
+    (code_location
+      (identifier)
+      (integer))
+    (instruction)))
 
 
 ================================================================================
@@ -38,10 +40,11 @@ Code Location - System + Offset 1
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (code_location
-    (identifier))
-  (instruction))
+  (source_location
+    (address)
+    (code_location
+      (identifier))
+    (instruction)))
 
 
 ================================================================================
@@ -53,11 +56,12 @@ Code Location - System + Offset 2
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (code_location
-    (identifier)
-    (integer))
-  (instruction))
+  (source_location
+    (address)
+    (code_location
+      (identifier)
+      (integer))
+    (instruction)))
 
 
 ================================================================================
@@ -69,8 +73,9 @@ Code Location - Instruction With Only Two Letters
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (code_location
-    (identifier)
-    (integer))
-  (instruction))
+  (source_location
+    (address)
+    (code_location
+      (identifier)
+      (integer))
+    (instruction)))

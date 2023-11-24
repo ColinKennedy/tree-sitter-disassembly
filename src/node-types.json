@@ -69,6 +69,21 @@
       "required": false,
       "types": [
         {
+          "type": "source_location",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "source_location",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
           "type": "address",
           "named": true
         },

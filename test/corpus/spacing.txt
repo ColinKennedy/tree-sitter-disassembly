@@ -8,19 +8,20 @@ Spacing - No Space Between Bytes And Instructions 1
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction)
-  (comment
-    (hexadecimal)))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment
+      (hexadecimal))))
 
 
 ================================================================================
@@ -33,17 +34,18 @@ Spacing - No Space Between Bytes And Instructions 2
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))
 
 
 ================================================================================
@@ -55,13 +57,14 @@ Spacing - Only Spaces, No Tabs
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))

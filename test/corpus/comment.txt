@@ -7,40 +7,42 @@ Comment With Arbitrary Text
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction)
-  (comment))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment)))
 
 
 ================================================================================
 Comment With Hexadecimal 1
 ================================================================================
 
-0x00000000004005f1	4c 8d 25 e8 07 20 00   	lea    0x2007e8(%rip),%r12        # 0x600de0
+0x00000000004005f1      4c 8d 25 e8 07 20 00    lea    0x2007e8(%rip),%r12        # 0x600de0
 
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction)
-  (comment
-    (hexadecimal)))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment
+      (hexadecimal))))
 
 
 ================================================================================
@@ -52,20 +54,21 @@ Comment With Hexadecimal 2
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction)
-  (comment
-    (hexadecimal)
-    (code_location
-      (identifier))))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment
+      (hexadecimal)
+      (code_location
+        (identifier)))))
 
 
 ================================================================================
@@ -77,21 +80,22 @@ Comment With Number 1
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction)
-  (comment
-    (hexadecimal)
-    (code_location
-      (identifier)
-      (hexadecimal))))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment
+      (hexadecimal)
+      (code_location
+        (identifier)
+        (hexadecimal)))))
 
 
 ================================================================================
@@ -103,15 +107,16 @@ Comment With Number 2
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction)
-  (comment
-    (hexadecimal)))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment
+      (hexadecimal))))
