@@ -1,7 +1,6 @@
-- Add "line" rule. Or a similarly named rule
- - Group all of the components within it
-- Need to allow `;` as a comment
- - jmp label ; This is also valid
+- Add docstrings to scanner.c
+- Get all tests to pass
+
 
 # tree-sitter-disassembly
 This library parses disassembly text using

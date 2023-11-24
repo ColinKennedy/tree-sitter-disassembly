@@ -78,12 +78,10 @@ static bool is_number_character(char character) {
 static bool scan_memory_dump(TSLexer *lexer)
 {
     while (true) {
-        // printf("%c", lexer->lookahead);
         lexer->advance(lexer, false);
 
         if (lexer->lookahead == '\n' || lexer->eof(lexer)) {
             // The line ended. Stop scanning
-            // printf("\n\nreached end\n\n");
             lexer->mark_end(lexer);
             lexer->result_symbol = MEMORY_DUMP;
 
@@ -130,15 +128,9 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
         return false;
     }
 
-    // printf("\n\nstarting assembly check\n\n");
-
     while (true) {
-        // printf("%c", lexer->lookahead);
-
         if (lexer->lookahead == '.')
         {
-            // printf("\n\nfound memory. Parsing\n\n");
-
             return scan_memory_dump(lexer);
         }
 
