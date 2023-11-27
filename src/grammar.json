@@ -5,20 +5,28 @@
       "type": "REPEAT",
       "content": {
         "type": "SYMBOL",
-        "name": "source_location"
+        "name": "_line"
       }
+    },
+    "_line": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "source_location"
+        },
+        {
+          "type": "STRING",
+          "value": "..."
+        }
+      ]
     },
     "source_location": {
       "type": "SEQ",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "hexadecimal"
-          },
-          "named": true,
-          "value": "address"
+          "type": "SYMBOL",
+          "name": "address"
         },
         {
           "type": "CHOICE",
@@ -37,19 +45,236 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_line_with_full_data"
+              "name": "code_location"
             },
             {
               "type": "SYMBOL",
-              "name": "_line_with_missing_data"
+              "name": "machine_code_bytes"
             }
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_new_line"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_whitespace_no_newline"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "raw_data"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "\\s*"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_instruction_and_comment"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "_instruction_and_location"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "bad_instruction"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
+    },
+    "_instruction_and_comment": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "instruction"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "comment"
+        }
+      ]
+    },
+    "_instruction_and_location": {
+      "type": "PREC_LEFT",
+      "value": 2,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "instruction"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "code_location"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "file_offset"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "instruction": {
+      "type": "PATTERN",
+      "value": "([^\\n#;<]|#-?\\d+)+"
+    },
+    "bad_instruction": {
+      "type": "STRING",
+      "value": "(bad)"
+    },
+    "comment": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "#"
+            },
+            {
+              "type": "STRING",
+              "value": ";"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_comment_with_address"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_comment_with_label"
+            }
+          ]
+        }
+      ]
+    },
+    "_comment_with_label": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "PATTERN",
+                        "value": "[^\\d,][^,]+"
+                      },
+                      "named": true,
+                      "value": "instruction"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": ","
+                    }
+                  ]
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "address"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "code_location"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "file_offset"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "address"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "code_location"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "file_offset"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "_comment_with_address": {
+      "type": "SYMBOL",
+      "name": "hexadecimal"
     },
     "code_location": {
       "type": "SEQ",
@@ -78,17 +303,8 @@
                   "value": "+"
                 },
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "hexadecimal"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "integer"
-                    }
-                  ]
+                  "type": "SYMBOL",
+                  "name": "hexadecimal"
                 }
               ]
             },
@@ -103,180 +319,99 @@
         }
       ]
     },
-    "machine_code_bytes": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "SYMBOL",
-        "name": "byte"
-      }
-    },
-    "integer": {
-      "type": "PATTERN",
-      "value": "[0-9]+"
+    "label_line": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_label_identifier"
+          },
+          "named": true,
+          "value": "label"
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        }
+      ]
     },
     "hexadecimal": {
       "type": "PATTERN",
-      "value": "(0[xh])?[0-9a-fA-F]+"
+      "value": "0[xh][0-9a-fA-F]+"
     },
     "byte": {
       "type": "PATTERN",
-      "value": "[0-9a-fA-F]{2}"
+      "value": "[0-9a-fA-F]{2}|[0-9a-fA-F]{4}|[0-9a-fA-F]{8}"
     },
-    "_line_with_full_data": {
+    "machine_code_bytes": {
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "code_location"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "machine_code_bytes"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "byte"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "memory_dump"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "bad_instruction"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "instruction"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_annotated_comment"
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": " "
               },
-              "named": true,
-              "value": "comment"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
-    },
-    "_line_with_missing_data": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "bad_instruction"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "instruction"
-        }
-      ]
-    },
-    "bad_instruction": {
-      "type": "STRING",
-      "value": "(bad)"
-    },
-    "_new_line": {
-      "type": "STRING",
-      "value": "\n"
-    },
-    "_annotated_comment": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "#"
-                },
-                {
-                  "type": "STRING",
-                  "value": ";"
-                }
-              ]
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "hexadecimal"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "integer"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "code_location"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "_word"
-                  }
-                ]
+              {
+                "type": "SYMBOL",
+                "name": "byte"
               }
-            }
-          ]
+            ]
+          }
         }
       ]
     },
-    "comment": {
+    "address": {
+      "type": "PATTERN",
+      "value": "(0x)?[0-9a-fA-F]+"
+    },
+    "file_offset": {
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "#"
-            },
-            {
-              "type": "STRING",
-              "value": ";"
-            }
-          ]
+          "type": "STRING",
+          "value": "("
         },
         {
-          "type": "PATTERN",
-          "value": ".*"
+          "type": "STRING",
+          "value": "File"
+        },
+        {
+          "type": "STRING",
+          "value": "Offset:"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "hexadecimal"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },
-    "_word": {
+    "_label_identifier": {
       "type": "PATTERN",
-      "value": "[a-zA-Z0-9\\.]+"
+      "value": "[A-Za-z.@_][A-Za-z0-9.@_$-\\(\\)]*"
+    },
+    "identifier": {
+      "type": "PATTERN",
+      "value": "[^\\n]+"
     }
   },
   "extras": [
     {
-      "type": "SYMBOL",
-      "name": "comment"
-    },
-    {
       "type": "PATTERN",
-      "value": "[\\s\\f\\uFEFF\\u2060\\u200B]|\\\\\\r?\\n"
+      "value": "\\s"
     }
   ],
   "conflicts": [],
@@ -288,11 +423,11 @@
     },
     {
       "type": "SYMBOL",
-      "name": "instruction"
+      "name": "raw_data"
     },
     {
       "type": "SYMBOL",
-      "name": "memory_dump"
+      "name": "_whitespace_no_newline"
     },
     {
       "type": "SYMBOL",

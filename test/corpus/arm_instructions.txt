@@ -11,7 +11,42 @@ Disassembly ARM Section With Raw Data
 
 --------------------------------------------------------------------------------
 
-(source)
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte))
+    (raw_data))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte))
+    (raw_data))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte))
+    (raw_data))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte))
+    (raw_data))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (raw_data))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte))
+    (raw_data)))
 
 
 ================================================================================
@@ -34,4 +69,8 @@ Disassembly ARM Section With ; Comment
     (machine_code_bytes
       (byte))
     (instruction)
-    (comment)))
+    (comment
+      (address)
+      (code_location
+        (identifier)
+        (hexadecimal)))))

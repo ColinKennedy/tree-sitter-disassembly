@@ -14,10 +14,6 @@
         {
           "type": "identifier",
           "named": true
-        },
-        {
-          "type": "integer",
-          "named": true
         }
       ]
     }
@@ -28,10 +24,18 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
+          "type": "address",
+          "named": true
+        },
+        {
           "type": "code_location",
+          "named": true
+        },
+        {
+          "type": "file_offset",
           "named": true
         },
         {
@@ -39,7 +43,22 @@
           "named": true
         },
         {
-          "type": "integer",
+          "type": "instruction",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "file_offset",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "hexadecimal",
           "named": true
         }
       ]
@@ -100,6 +119,10 @@
           "named": true
         },
         {
+          "type": "file_offset",
+          "named": true
+        },
+        {
           "type": "instruction",
           "named": true
         },
@@ -108,18 +131,38 @@
           "named": true
         },
         {
-          "type": "memory_dump",
+          "type": "raw_data",
           "named": true
         }
       ]
     }
   },
   {
+    "type": " ",
+    "named": false
+  },
+  {
     "type": "#",
     "named": false
   },
   {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
     "type": "+",
+    "named": false
+  },
+  {
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": "...",
     "named": false
   },
   {
@@ -136,6 +179,14 @@
   },
   {
     "type": ">",
+    "named": false
+  },
+  {
+    "type": "File",
+    "named": false
+  },
+  {
+    "type": "Offset:",
     "named": false
   },
   {
@@ -163,11 +214,11 @@
     "named": true
   },
   {
-    "type": "integer",
+    "type": "label",
     "named": true
   },
   {
-    "type": "memory_dump",
+    "type": "raw_data",
     "named": true
   }
 ]
