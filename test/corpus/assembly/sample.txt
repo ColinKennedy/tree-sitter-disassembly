@@ -1,0 +1,183 @@
+================================================================================
+Example, Simple
+================================================================================
+
+0:	48 89 f8                                              	mov    rax,rdi
+3:	48 8b 4f 40                                           	mov    rcx,QWORD PTR [rdi+0x40]
+7:	8b 31                                                 	mov    esi,DWORD PTR [rcx]
+9:	8d 56 01                                              	lea    edx,[rsi+0x1]
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte))
+    (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte))
+    (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))
+
+
+================================================================================
+Multi-Hexadecimal Instruction Line
+================================================================================
+
+70:	f2 0f 11 44 24 08                                     	movsd  QWORD PTR [rsp+0x8],xmm0
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))
+
+
+================================================================================
+Instruction With Only Two Letters Bug-Fix
+================================================================================
+
+23:	74 12                                                 	je     37 <engine::world::World::initialize()+0x25> (File Offset: 0xa7)
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte))
+    (instruction)
+    (code_location
+      (identifier)
+      (hexadecimal))
+    (file_offset
+      (hexadecimal))))
+
+
+================================================================================
+Concise Whitespace Between Bytes And Instructions 1
+================================================================================
+
+40031a:	69 62 36 34 2f 6c 64 	imul   esp,DWORD PTR [rdx+0x36],0x646c2f34
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))
+
+
+================================================================================
+Concise Whitespace Between Bytes And Instructions 2
+================================================================================
+
+40031a:	69 62 36 34 2f 6c 64 imul   esp,DWORD PTR [rdx+0x36],0x646c2f34
+
+--------------------------------------------------------------------------------
+
+(source)
+
+
+================================================================================
+Templated C++ Code Location
+================================================================================
+
+
+409f80:	ff 25 ba 11 24 00    	jmp    QWORD PTR [rip+0x2411ba]        # 64b140 <QMessageBox::information(QWidget*, QString const&, QString const&, QFlags<QMessageBox::StandardButton>, QMessageBox::StandardButton)@Qt_5>
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment
+      (address)
+      (code_location
+        (identifier)))))
+
+
+================================================================================
+Instruction With + Sign
+================================================================================
+
+23:	74 12                                                 	je     37 <engine::world::World::operator+()+0x25> (File Offset: 0xa7)
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte))
+    (instruction)
+    (code_location
+      (identifier)
+      (hexadecimal))
+    (file_offset
+      (hexadecimal))))
+
+
+================================================================================
+Bad Instruction Parse
+================================================================================
+
+490640:	00 00 00 00          	(bad)
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (bad_instruction)))

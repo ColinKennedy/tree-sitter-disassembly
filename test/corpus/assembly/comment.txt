@@ -1,0 +1,51 @@
+================================================================================
+Inline Comment
+================================================================================
+
+40112c:	48 39 1d 55 06 0c 00 	cmp    QWORD PTR [rip+0xc0655],rbx        # 0x4c1788
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment
+      (hexadecimal))))
+
+
+================================================================================
+Comment With Address Information
+================================================================================
+
+129:	48 8d 3d 00 00 00 00                                  	lea    rdi,[rip+0x0]        # 130 <void std::vector<engine::entity::Entity, std::allocator<engine::entity::Entity> >::_M_realloc_insert<engine::entity::Entity const&>(__gnu_cxx::__normal_iterator<engine::entity::Entity*, std::vector<engine::entity::Entity, std::allocator<engine::entity::Entity> > >, engine::entity::Entity const&)+0x130> (File Offset: 0x40c)
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment
+      (address)
+      (code_location
+        (identifier)
+        (hexadecimal))
+      (file_offset
+        (hexadecimal)))))

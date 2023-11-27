@@ -1,0 +1,207 @@
+================================================================================
+Disassembly Section Label
+================================================================================
+
+0:	41 55                                                 	push   r13
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte))
+    (instruction)))
+
+
+================================================================================
+File Offset
+================================================================================
+
+23:	74 12                                                 	je     37 <engine::world::World::initialize()+0x25> (File Offset: 0xa7)
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte))
+    (instruction)
+    (code_location
+      (identifier)
+      (hexadecimal))
+    (file_offset
+      (hexadecimal))))
+
+
+================================================================================
+Abnormal Instruction Ending
+================================================================================
+
+4c:	48 39 eb                                              	cmp    rbx,rbp # ffffffffa0400635 <thing+0x40>
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte))
+    (instruction)
+    (comment
+      (address)
+      (code_location
+        (identifier)
+        (hexadecimal)))))
+
+
+================================================================================
+Instruction, Location, And Offset
+================================================================================
+
+23:	74 12                                                 	je     37 <engine::world::World::initialize()+0x25> (File Offset: 0xa7)
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte))
+    (instruction)
+    (code_location
+      (identifier)
+      (hexadecimal))
+    (file_offset
+      (hexadecimal))))
+
+
+================================================================================
+Disassembly Section And Code Simple
+================================================================================
+
+0:	48 89 f8                                              	mov    rax,rdi
+3:	48 8b 4f 40                                           	mov    rcx,QWORD PTR [rdi+0x40]
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte))
+    (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))
+
+
+================================================================================
+Empty Assembly Instruction, Single Sections
+================================================================================
+
+4004ff:	00
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte))))
+
+
+================================================================================
+Empty Assembly Instruction, Multiple Sections
+================================================================================
+
+4005ab:	00 00 00 00 00 
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))))
+
+
+================================================================================
+Empty Assembly Instruction, Infixed With Other Instructions
+================================================================================
+
+3d:	01 
+3e:	01                   	.byte 0x1
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte))
+    (instruction)))
+
+
+================================================================================
+Empty Assembly Instruction, EOF
+================================================================================
+
+60d1e6:	00 00                	add    BYTE PTR [rax],al
+60d1e8:	00 00                	add 
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte))
+    (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte))
+    (instruction)))
+
+
+================================================================================
+Disassembly Section With _ Prefix
+================================================================================
+
+490640:	f3 0f 1e fa          	repz nop edx
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))
