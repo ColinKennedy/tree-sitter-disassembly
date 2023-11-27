@@ -154,3 +154,11 @@
 #                                                   ^ function
 #                                                       ^ comment
 #                                                         ^ comment
+
+3d:	01 
+# <- number
+#       ^ constant
+3e:	01                   	.byte 0x1
+# <- number
+#       ^ constant
+#                               ^ function
