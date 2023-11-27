@@ -21,60 +21,90 @@ module.exports = grammar(
 
         externals: $ => [
             $.code_identifier,
-            $.instruction,
-            $.memory_dump,
+            $.raw_data,
+            $._whitespace_no_newline,
             $._error_sentinel,
         ],
 
-        extras: $ => [
-            $.comment,
-            /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/
-        ],
-
         rules: {
-            source: $ => repeat($.source_location),
+            source: $ => repeat($._line),
+
+            _line: $ => choice(
+                $.source_location,
+                '...',
+            ),
 
             source_location: $ => seq(
-                alias($.hexadecimal, $.address),
+                $.address,
                 optional(":"),
+                choice($.code_location, $.machine_code_bytes),
                 choice(
-                    $._line_with_full_data,
-                    $._line_with_missing_data,
+                    $._whitespace_no_newline,
+                    $.raw_data,
+                    seq(
+                        /\s*/,
+                        choice(
+                            $._instruction_and_comment,
+                            $._instruction_and_location,
+                            $.bad_instruction,
+                        ),
+                    )
                 ),
-                $._new_line,
             ),
+
+            _instruction_and_comment: $ => seq(
+                $.instruction,
+                $.comment,
+            ),
+            _instruction_and_location: $ => prec.left(
+                2,
+                seq(
+                    $.instruction,
+                    optional($.code_location),
+                    optional($.file_offset),
+                )
+            ),
+            instruction: _ => /([^\n#;<]|#-?\d+)+/,
+            bad_instruction: _ => "(bad)",
+
+            comment: $ => seq(
+                choice("#", ';'),
+                choice(
+                    $._comment_with_address,
+                    $._comment_with_label,
+                ),
+            ),
+
+            _comment_with_label: $ => choice(
+                seq(
+                  '(',
+                  optional(seq(alias(/[^\d,][^,]+/, $.instruction), ',')),
+                  $.address,
+                  $.code_location,
+                  optional($.file_offset),
+                  ')'
+                ),
+                seq($.address, $.code_location, optional($.file_offset)),
+            ),
+            _comment_with_address: $ => $.hexadecimal,
 
             code_location: $ => seq(
                 "<",
                 alias($.code_identifier, $.identifier),
-                optional(seq("+", choice($.hexadecimal, $.integer))),
+                optional(seq("+", $.hexadecimal)),
                 ">",
             ),
 
-            machine_code_bytes: $ => repeat1($.byte),
-            integer: _ => /[0-9]+/,
-            hexadecimal: _ => /(0[xh])?[0-9a-fA-F]+/,
-            byte: _ => /[0-9a-fA-F]{2}/,
+            label_line: $ => seq(alias($._label_identifier, $.label), ":"),
 
-            _line_with_full_data: $ => seq(
-                choice($.code_location, $.machine_code_bytes),
-                choice($.memory_dump, $.bad_instruction, $.instruction),
-                optional(alias($._annotated_comment, $.comment))
-            ),
-            _line_with_missing_data: $ => choice($.bad_instruction, $.instruction),
+            hexadecimal: _ => /0[xh][0-9a-fA-F]+/,
+            byte: _ => /[0-9a-fA-F]{2}|[0-9a-fA-F]{4}|[0-9a-fA-F]{8}/,
+            machine_code_bytes: $ => space_separated1($.byte),
 
-            bad_instruction: _ => "(bad)",
-            _new_line: _ => "\n",
-
-            _annotated_comment: $ => choice(
-                seq(
-                    choice("#", ";"),
-                    repeat(choice($.hexadecimal, $.integer, $.code_location, $._word)),
-                ),
-            ),
-
-            comment: _ => seq(choice("#", ";"), /.*/),  // Tree-sitter unittest comment
-            _word: _ => /[a-zA-Z0-9\.]+/,
+            address: _ => /(0x)?[0-9a-fA-F]+/,
+            file_offset: $ => seq("(", "File", "Offset:", $.hexadecimal, ")"),
+            _label_identifier: _ => /[A-Za-z.@_][A-Za-z0-9.@_$-\(\)]*/,  // Test this, later
+            identifier: _ => /[^\n]+/,
         }
     }
 )
