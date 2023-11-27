@@ -136,7 +136,21 @@
 #                      ^ constant
 #                               ^ constant
 #                                            ^ function
+#                                                                       ^ comment
 #                                                                         ^ number
 #                                                                                 ^ variable
 #                                                                                               ^ punctuation.delimiter
 #                                                                                                ^ number
+
+
+8000200:	b510      	push	{r4, lr}
+# <- number
+#               ^ constant
+#                               ^ function
+8000202:	4c05      	ldr	r4, [pc, #20]	; (8000218 <__do_global_dtors_aux+0x18>)
+# <- number
+#               ^ constant
+#                               ^ function
+#                                                   ^ function
+#                                                       ^ comment
+#                                                         ^ comment
