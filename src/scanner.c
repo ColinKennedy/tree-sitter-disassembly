@@ -75,23 +75,8 @@ static bool is_number_character(char character) {
 }
 
 
-static bool scan_memory_dump(TSLexer *lexer)
-{
-    while (true) {
-        lexer->advance(lexer, false);
-
-        if (lexer->lookahead == '\n' || lexer->eof(lexer)) {
-            // The line ended. Stop scanning
-            lexer->mark_end(lexer);
-            lexer->result_symbol = MEMORY_DUMP;
-
-            return true;
-        }
-    }
-
-    return false;
-}
-
+static bool scan_code_identifier(TSLexer *lexer);
+static bool scan_memory_dump(TSLexer *lexer);
 
 /// \brief Check if the lexer is looking at an Assembly instruction.
 ///
@@ -114,6 +99,8 @@ static bool scan_memory_dump(TSLexer *lexer)
 /// \return If an Assembly instruction was found, return `true`.
 ///
 static bool scan_assembly_instruction(TSLexer *lexer) {
+    // printf("\n\ndoing it\n\n");
+
     bool has_text = false;
     bool is_maybe_bad_instruction = true;
     bool is_maybe_a_byte = true;
@@ -122,19 +109,31 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
     unsigned int offset_counter = 0;
     char bad_instruction[] = "(bad)";
     unsigned int const size = (sizeof(bad_instruction) / sizeof(char) - 1);
+    // printf("\n\nstill doing it\n\n");
 
     if (lexer->lookahead == ':')
     {
+        // printf("\n\nis not assembly because of :. Exit\n\n");
+
         return false;
     }
 
+    // printf("\n\nmore still doing it\n\n");
+    // printf("starting parse %c", lexer->lookahead);
+
     while (true) {
+        // printf("%c", lexer->lookahead);
+
         if (lexer->lookahead == '.')
         {
+            // printf("\n\nstopping early because of .\n\n");
+
             return scan_memory_dump(lexer);
         }
 
         if (!has_text && lexer->lookahead == '<') {
+            // printf("\n\nweird < found. Stopping\n\n");
+
             // We're either
             //
             // 1. Inside of a code location or something other than an Assembly instruction
@@ -142,11 +141,14 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
             //
             // #1 must return false, #2 must return true. So we just test both, here.
             //
-            return scan_memory_dump(lexer);
+            return false;
+            // return scan_code_identifier(lexer);
+            // return scan_code_identifier(lexer) || scan_memory_dump(lexer);
         }
 
         if (lexer->lookahead == '\n' || lexer->eof(lexer)) {
             // The line ended. Stop scanning
+            // printf("\n\nend of line\n\n");
             lexer->mark_end(lexer);
             lexer->result_symbol = ASSEMBLY_INSTRUCTION;
 
@@ -154,6 +156,7 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
         }
 
         if (lexer->lookahead == '#' || lexer->lookahead == ';') {
+            // printf("\n\nComment found. Stopping\n\n");
             // The start of a comment was found. Stop scanning
             lexer->mark_end(lexer);
             lexer->result_symbol = ASSEMBLY_INSTRUCTION;
@@ -215,14 +218,20 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
 ///
 /// \return If the address is valid, return `true`.
 ///
-static bool scan_code_identifier(TSLexer *lexer) {
+static bool scan_code_identifier(TSLexer *lexer)
+{
+    // printf("\n\ncode identifier\n\n");
+
     bool has_hexadecimal_data = false;
     bool has_text = false;
     bool is_maybe_at_end = false;
     bool possibly_in_next_hexadecimal_token = false;
 
     while (true) {
+        // printf("%c", lexer->lookahead);
+
         if (lexer->lookahead == '\n' || lexer->eof(lexer)) {
+            // printf("\n\nstoping. Found end of line\n\n", has_text);
             lexer->result_symbol = CODE_IDENTIFIER;
 
             return has_text;
@@ -238,6 +247,8 @@ static bool scan_code_identifier(TSLexer *lexer) {
         }
 
         if (is_maybe_at_end && lexer->lookahead != '\n' && iswspace(lexer->lookahead)) {
+            // printf("\n\nabout to exit. Maybe good %d\n\n", has_text);
+
             // We assume that, following a > or + character, there cannot be whitespace.
             // If there is whitespace then that means we've reached the end of the match
             // and it's time to exit
@@ -250,6 +261,8 @@ static bool scan_code_identifier(TSLexer *lexer) {
         switch (lexer->lookahead) {
             case ';':
             case '#':
+                // printf("\n\nstoping. Found comment %d\n\n", has_text);
+
                 // We've reached the end of the instruction and the start of a comment
                 lexer->result_symbol = CODE_IDENTIFIER;
 
@@ -288,6 +301,25 @@ static bool scan_code_identifier(TSLexer *lexer) {
     return has_text;
 }
 
+
+static bool scan_memory_dump(TSLexer *lexer)
+{
+    while (true) {
+        lexer->advance(lexer, false);
+
+        if (lexer->lookahead == '\n' || lexer->eof(lexer)) {
+            // The line ended. Stop scanning
+            lexer->mark_end(lexer);
+            lexer->result_symbol = MEMORY_DUMP;
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 void *tree_sitter_disassembly_external_scanner_create() { return NULL; }
 
 void tree_sitter_disassembly_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {}
@@ -296,14 +328,21 @@ void tree_sitter_disassembly_external_scanner_destroy(void *payload) {}
 
 bool tree_sitter_disassembly_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
     if (valid_symbols[ERROR_SENTINEL]) {
+        // printf("\n\nin error. Handle!\n\n");
+
         return false;
+        // return scan_assembly_instruction(lexer);
     }
 
     if (valid_symbols[CODE_IDENTIFIER]) {
+        // printf("\n\nstart code identifier\n\n");
+
         return scan_code_identifier(lexer);
     }
 
     if (valid_symbols[ASSEMBLY_INSTRUCTION]) {
+        // printf("\n\nstarting with assembly\n\n");
+
         return scan_assembly_instruction(lexer);
     }
 

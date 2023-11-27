@@ -139,8 +139,21 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_line_with_missing_data"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "memory_dump"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "bad_instruction"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "instruction"
+            }
+          ]
         },
         {
           "type": "CHOICE",
@@ -164,10 +177,6 @@
     "_line_with_missing_data": {
       "type": "CHOICE",
       "members": [
-        {
-          "type": "SYMBOL",
-          "name": "memory_dump"
-        },
         {
           "type": "SYMBOL",
           "name": "bad_instruction"

@@ -58,10 +58,10 @@ module.exports = grammar(
 
             _line_with_full_data: $ => seq(
                 choice($.code_location, $.machine_code_bytes),
-                $._line_with_missing_data,
+                choice($.memory_dump, $.bad_instruction, $.instruction),
                 optional(alias($._annotated_comment, $.comment))
             ),
-            _line_with_missing_data: $ => choice($.memory_dump, $.bad_instruction, $.instruction),
+            _line_with_missing_data: $ => choice($.bad_instruction, $.instruction),
 
             bad_instruction: _ => "(bad)",
             _new_line: _ => "\n",
