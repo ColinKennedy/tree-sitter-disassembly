@@ -1,5 +1,9 @@
 - Add docstrings to scanner.c
 - Get all tests to pass
+- Clean up the old, copied objdump code
+ - Possibly remove the code_location code from lines like
+  `23:	74 12                                                 	je     37 <engine::world::World::initialize()+0x25> (File Offset: 0xa7)`
+- Add highlight unittests for the assembly/ folder tests
 
 
 # tree-sitter-disassembly

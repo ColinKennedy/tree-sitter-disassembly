@@ -29,20 +29,7 @@ Comment With Hexadecimal 1
 
 --------------------------------------------------------------------------------
 
-(source
-  (source_location
-    (address)
-    (machine_code_bytes
-      (byte)
-      (byte)
-      (byte)
-      (byte)
-      (byte)
-      (byte)
-      (byte))
-    (instruction)
-    (comment
-      (hexadecimal))))
+(source)
 
 
 ================================================================================

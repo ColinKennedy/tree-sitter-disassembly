@@ -154,21 +154,3 @@
 #                                                   ^ function
 #                                                       ^ comment
 #                                                         ^ comment
-
-3d:	01 
-# <- number
-#       ^ constant
-3e:	01                   	.byte 0x1
-# <- number
-#       ^ constant
-#                               ^ function
-
-23:	74 12                                                 	je     37 <engine::world::World::initialize()+0x25> (File Offset: 0xa7)
-# <- number
-#       ^ constant
-#          ^ constant
-#                                                               ^ function
-#                                                                      ^ function
-#                                                                          ^ function
-#                                                                                                              ^ function
-#                                                                                                                     ^ function
