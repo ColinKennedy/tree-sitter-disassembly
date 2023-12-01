@@ -14,6 +14,10 @@
         {
           "type": "identifier",
           "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
         }
       ]
     }
@@ -211,6 +215,10 @@
   },
   {
     "type": "instruction",
+    "named": true
+  },
+  {
+    "type": "integer",
     "named": true
   },
   {

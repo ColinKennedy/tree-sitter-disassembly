@@ -303,8 +303,17 @@
                   "value": "+"
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "hexadecimal"
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "hexadecimal"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "integer"
+                    }
+                  ]
                 }
               ]
             },
@@ -340,6 +349,10 @@
     "hexadecimal": {
       "type": "PATTERN",
       "value": "0[xh][0-9a-fA-F]+"
+    },
+    "integer": {
+      "type": "PATTERN",
+      "value": "[0-9a-fA-F]+"
     },
     "byte": {
       "type": "PATTERN",
