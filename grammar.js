@@ -31,7 +31,7 @@ module.exports = grammar(
 
             _line: $ => choice(
                 $.source_location,
-                '...',
+                "...",
             ),
 
             source_location: $ => seq(
@@ -91,13 +91,14 @@ module.exports = grammar(
             code_location: $ => seq(
                 "<",
                 alias($.code_identifier, $.identifier),
-                optional(seq("+", $.hexadecimal)),
+                optional(seq("+", choice($.hexadecimal, $.integer))),
                 ">",
             ),
 
             label_line: $ => seq(alias($._label_identifier, $.label), ":"),
 
             hexadecimal: _ => /0[xh][0-9a-fA-F]+/,
+            integer: _ => /[0-9a-fA-F]+/,
             byte: _ => /[0-9a-fA-F]{2}|[0-9a-fA-F]{4}|[0-9a-fA-F]{8}/,
             machine_code_bytes: $ => space_separated1($.byte),
 
