@@ -7,14 +7,15 @@ Bytes + Call 1
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))
 
 
 ================================================================================
@@ -26,13 +27,14 @@ Bytes + Call 2
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte)
-    (byte))
-  (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))

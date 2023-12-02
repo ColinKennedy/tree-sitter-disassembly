@@ -22,6 +22,7 @@ module.exports = grammar(
         externals: $ => [
             $.code_identifier,
             $.instruction,
+            $.memory_dump,
             $._error_sentinel,
         ],
 
@@ -31,9 +32,9 @@ module.exports = grammar(
         ],
 
         rules: {
-            source: $ => repeat($._line),
+            source: $ => repeat($.source_location),
 
-            _line: $ => seq(
+            source_location: $ => seq(
                 alias($.hexadecimal, $.address),
                 optional(":"),
                 choice(
@@ -53,11 +54,11 @@ module.exports = grammar(
             machine_code_bytes: $ => repeat1($.byte),
             integer: _ => /[0-9]+/,
             hexadecimal: _ => /(0[xh])?[0-9a-fA-F]+/,
-            byte: _ => /[0-9a-fA-F]{2}/,
+            byte: _ => /[0-9a-fA-F]{8}|[0-9a-fA-F]{4}|[0-9a-fA-F]{2}/,
 
             _line_with_full_data: $ => seq(
                 choice($.code_location, $.machine_code_bytes),
-                $._line_with_missing_data,
+                choice($.memory_dump, $.bad_instruction, $.instruction),
                 optional(alias($._annotated_comment, $.comment))
             ),
             _line_with_missing_data: $ => choice($.bad_instruction, $.instruction),
@@ -67,12 +68,27 @@ module.exports = grammar(
 
             _annotated_comment: $ => choice(
                 seq(
-                    "#",
-                    repeat(choice($.hexadecimal, $.integer, $.code_location, $._word)),
+                    choice("#", ";"),
+                    repeat(
+                        choice(
+                            $.hexadecimal,
+                            $.integer,
+                            $.code_location,
+                            $._word,
+                            $._arm_address_comment,
+                        )
+                    ),
                 ),
             ),
+            _arm_address_comment: $ => seq(
+                "(",
+                optional(seq(alias(/[^\d,][^,]+/, $.instruction), ",")),
+                $.hexadecimal,
+                $.code_location,
+                ")"
+            ),
 
-            comment: _ => seq("#", /.*/),  // Tree-sitter unittest comment
+            comment: _ => seq(choice("#", ";"), /.*/),  // Tree-sitter unittest comment
             _word: _ => /[a-zA-Z0-9\.]+/,
         }
     }

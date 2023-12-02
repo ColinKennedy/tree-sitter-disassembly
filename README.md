@@ -3,8 +3,26 @@ This library parses disassembly text using
 [tree-sitter](https://tree-sitter.github.io/tree-sitter) to produce
 a light-weight grammar of the file.
 
-![tree-sitter-disassembly-nvim-dap-ui](https://github.com/ColinKennedy/tree-sitter-disassembly/assets/10103049/b95cbefd-8b87-4638-9373-275981d9451b)
-![tree-sitter-disassembly-full-screen](https://github.com/ColinKennedy/tree-sitter-disassembly/assets/10103049/67f47a14-5fc5-42d2-ba09-bd9250dcb726)
+
+## Screenshots
+### Assembly
+![tree_sitter_disassembly_full_screen](https://github.com/ColinKennedy/tree-sitter-disassembly/assets/10103049/efb873a6-4082-4da0-bb2a-7244f76a8b32)
+
+
+### Memory Dumps
+![tree_sitter_disassembly_memory_dump](https://github.com/ColinKennedy/tree-sitter-disassembly/assets/10103049/a53fc773-3791-48f0-8ff0-8a10af8f4897)
+
+
+### ARM
+Limited ARM support
+
+![tree_sitter_arm_disassembly](https://github.com/ColinKennedy/tree-sitter-disassembly/assets/10103049/5877bc53-0145-45f9-a370-3ff56a55ab54)
+
+
+### nvim-dap-ui
+Warning: WIP. This feature is not yet merged into nvim-dap-ui.
+
+![tree_sitter_disassembly_nvim_dap_ui](https://github.com/ColinKennedy/tree-sitter-disassembly/assets/10103049/9c899838-5983-431d-8320-5725f75f4f31)
 
 
 ## Disclaimer

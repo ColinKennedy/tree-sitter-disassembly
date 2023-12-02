@@ -7,11 +7,12 @@ Code Caller C++ Template
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (code_location
-    (identifier)
-    (integer))
-  (instruction))
+  (source_location
+    (address)
+    (code_location
+      (identifier)
+      (integer))
+    (instruction)))
 
 
 ================================================================================
@@ -23,11 +24,12 @@ Code Caller C++ operator>>
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (code_location
-    (identifier)
-    (integer))
-  (instruction))
+  (source_location
+    (address)
+    (code_location
+      (identifier)
+      (integer))
+    (instruction)))
 
 
 ================================================================================
@@ -39,10 +41,11 @@ Code Caller C++ operator+
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (code_location
-    (identifier))
-  (instruction))
+  (source_location
+    (address)
+    (code_location
+      (identifier))
+    (instruction)))
 
 
 ================================================================================
@@ -54,8 +57,9 @@ Code Caller C++ operator+ + Offset
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (code_location
-    (identifier)
-    (integer))
-  (instruction))
+  (source_location
+    (address)
+    (code_location
+      (identifier)
+      (integer))
+    (instruction)))

@@ -12,6 +12,7 @@
 (code_location (identifier) @function.call)
 (comment) @comment
 (instruction) @function
+(memory_dump) @string
 
 ["<" ">"] @punctuation.special
 ["+" ":"] @punctuation.delimiter

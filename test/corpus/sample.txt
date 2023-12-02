@@ -7,10 +7,11 @@ Bad Instruction
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (machine_code_bytes
-    (byte))
-  (bad_instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte))
+    (bad_instruction)))
 
 
 ================================================================================
@@ -22,11 +23,12 @@ Code Caller Location - System + Offset
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (code_location
-    (identifier)
-    (integer))
-  (instruction))
+  (source_location
+    (address)
+    (code_location
+      (identifier)
+      (integer))
+    (instruction)))
 
 
 ================================================================================
@@ -38,10 +40,11 @@ Code Location - System + Offset 1
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (code_location
-    (identifier))
-  (instruction))
+  (source_location
+    (address)
+    (code_location
+      (identifier))
+    (instruction)))
 
 
 ================================================================================
@@ -53,11 +56,12 @@ Code Location - System + Offset 2
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (code_location
-    (identifier)
-    (integer))
-  (instruction))
+  (source_location
+    (address)
+    (code_location
+      (identifier)
+      (integer))
+    (instruction)))
 
 
 ================================================================================
@@ -69,8 +73,149 @@ Code Location - Instruction With Only Two Letters
 --------------------------------------------------------------------------------
 
 (source
-  (address)
-  (code_location
-    (identifier)
-    (integer))
-  (instruction))
+  (source_location
+    (address)
+    (code_location
+      (identifier)
+      (integer))
+    (instruction)))
+
+
+
+================================================================================
+Procedure Linkage Table Jmp
+================================================================================
+
+40045b:       e9 d0 ff ff ff          jmpq   400430 <.plt>
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))
+
+
+================================================================================
+Global Lookup Table + Procedure Linkage Table Jmp
+================================================================================
+
+40045b:       e9 d0 ff ff ff          jmpq   400430 <.got.plt>
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))
+
+
+================================================================================
+Instruction With Same Number Of Characters
+================================================================================
+
+0x00000000004005cc	e8 7f fe ff ff         	mov a
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))
+
+
+
+================================================================================
+Opcode Register Extensions
+================================================================================
+
+2:	43 3a 20             	rex.XB cmp (%r8),%spl
+400260:	47                   	rex.RXB
+400261:	4e 55                	rex.WRX push %rbp
+400289:	45 83 d9 44          	rex.RB sbb $0x44,%r9d
+40028f:	4b a7                	rex.WXB cmpsq %es:(%rdi),%ds:(%rsi)
+400739:	41 0e                	rex.B (bad)
+400741:	49 0c 07             	rex.WB or $0x7,%al
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte))
+    (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte))
+    (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte))
+    (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte)
+      (byte))
+    (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte))
+    (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte))
+    (instruction))
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte)
+      (byte)
+      (byte))
+    (instruction)))
+
+
+================================================================================
+GNU Pseudo-Op Directive
+================================================================================
+
+47:	01                   	.byte 0x1
+
+--------------------------------------------------------------------------------
+
+(source
+  (source_location
+    (address)
+    (machine_code_bytes
+      (byte))
+    (instruction)))
