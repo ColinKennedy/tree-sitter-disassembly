@@ -26,7 +26,8 @@ enum TokenType {
 };
 
 
-static unsigned int CURRENT_EXPECTED_BYTES = 0;
+static unsigned int EXPECTED_BYTES_COUNT = 0;
+static unsigned int EXPECTED_BYTES_WIDTH = 0;
 
 
 /// \brief A description of a memory dump, including statistics and correctness.
@@ -198,18 +199,31 @@ static unsigned int look_ahead_for_bytes(TSLexer *lexer, unsigned int characters
 ///     - An ARM register was found (if so, keep going. We're still in an Assembly instruction)
 ///
 /// Important States:
-///     - CURRENT_EXPECTED_BYTES
+///     - EXPECTED_BYTES_COUNT
 ///         - When parsing, if a hexadecimal byte is found ...
-///             - Scan ahead to find all bytes. Store this count in CURRENT_EXPECTED_BYTES
+///             - Scan ahead to find all bytes. Store this count in EXPECTED_BYTES_COUNT
 ///         - Later, when checking "is the a memory dump or an assembly instruction", refer back to
-///           CURRENT_EXPECTED_BYTES. A memory dump's length must match CURRENT_EXPECTED_BYTES
+///           EXPECTED_BYTES_COUNT. A memory dump's length must match EXPECTED_BYTES_COUNT
+///     - EXPECTED_BYTES_WIDTH
+///         - x86_64 tends to show bytes as 2 values at a time. e.g. `01 fa ab`, etc.
+///         - ARM may show bytes 2/4/8 values at a time. e.g. `01fa abab 1001`, etc.
+///         - Instructions like `addb` can be mistaken as a byte
+///         - Despite the differing conventions, one constant is this:
+///             - Per-line, every byte is always the same width (there's no
+///             2-byte and 4-byte in the same line)
+///         - Using the above assumption, `EXPECTED_BYTES_WIDTH` exists
+///
+///         - If a hexadecimal byte is found and `EXPECTED_BYTES_WIDTH` is unset
+///             - Set it once and remember it for the rest of the line
+///         - Once the line completes, set it back to 0
+///         - A hexadecimal is not "found" unless it satisfies `EXPECTED_BYTES_WIDTH`
 ///
 /// \param lexer The current position in a parse.
 /// \return If an Assembly instruction was found, return `true`.
 ///
 static bool scan_assembly_instruction(TSLexer *lexer) {
     bool has_text = false;
-    bool has_space = false;
+    bool has_space = false;  // (We don't count any leading space. Just space after the first non-whitespace)
     bool has_period = false;
     unsigned int times_iterated = 0;
     bool is_maybe_bad_instruction = true;
@@ -258,13 +272,15 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
                 lexer->mark_end(lexer);
                 lexer->result_symbol = ASSEMBLY_INSTRUCTION;
 
-                CURRENT_EXPECTED_BYTES = 0;
+                EXPECTED_BYTES_COUNT = 0;
+                EXPECTED_BYTES_WIDTH = 0;
 
                 return false;
             }
 
-            bool matches = (times_iterated + result.times_iterated + 1) == CURRENT_EXPECTED_BYTES;
-            CURRENT_EXPECTED_BYTES = 0;
+            bool matches = (times_iterated + result.times_iterated + 1) == EXPECTED_BYTES_COUNT;
+            EXPECTED_BYTES_COUNT = 0;
+            EXPECTED_BYTES_WIDTH = 0;
 
             if (matches)
             {
@@ -303,13 +319,15 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
 
                 if (!result.is_valid)
                 {
-                    CURRENT_EXPECTED_BYTES = 0;
+                    EXPECTED_BYTES_COUNT = 0;
+                    EXPECTED_BYTES_WIDTH = 0;
 
                     return false;
                 }
 
-                bool matches = (times_iterated + result.times_iterated + 1) == CURRENT_EXPECTED_BYTES;
-                CURRENT_EXPECTED_BYTES = 0;
+                bool matches = (times_iterated + result.times_iterated + 1) == EXPECTED_BYTES_COUNT;
+                EXPECTED_BYTES_COUNT = 0;
+                EXPECTED_BYTES_WIDTH = 0;
 
                 return matches;
             }
@@ -326,8 +344,10 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
         }
 
         if (lexer->lookahead == '\n' || lexer->eof(lexer)) {
-            if ((has_period || !has_space) && times_iterated == CURRENT_EXPECTED_BYTES)
+            if ((has_period || !has_space) && times_iterated == EXPECTED_BYTES_COUNT)
             {
+                EXPECTED_BYTES_WIDTH = 0;
+
                 // Important: We're guessing here. It's a good guess but it
                 // might be the source of parsing bugs later
                 //
@@ -337,7 +357,8 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
                 return true;
             }
 
-            CURRENT_EXPECTED_BYTES = 0;
+            EXPECTED_BYTES_COUNT = 0;
+            EXPECTED_BYTES_WIDTH = 0;
 
             if (possibly_need_to_exit)
             {
@@ -368,7 +389,8 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
                 // `lexer->mark_end(lexer);` was already written in a previous
                 // iteration.
 
-                CURRENT_EXPECTED_BYTES = 0;
+                EXPECTED_BYTES_COUNT = 0;
+                EXPECTED_BYTES_WIDTH = 0;
 
                 return has_text;
             }
@@ -400,16 +422,30 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
             //
             lexer->mark_end(lexer);
             lexer->result_symbol = ASSEMBLY_INSTRUCTION;
-            CURRENT_EXPECTED_BYTES = 0;
+            EXPECTED_BYTES_COUNT = 0;
+            EXPECTED_BYTES_WIDTH = 0;
 
             return has_text;
         }
 
         bool is_whitespace = iswspace(lexer->lookahead);
 
-        if (is_whitespace && has_text)
+        if (is_whitespace)
         {
-            has_space = true;
+            if (has_text)
+            {
+                // There's at least one space in the output (We don't count any leading space)
+                has_space = true;
+            }
+
+            if (is_maybe_a_byte && EXPECTED_BYTES_WIDTH == 0)
+            {
+                // A hexadecimal `(machine_code_byte) (byte))` was found but
+                // `EXPECTED_BYTES_WIDTH` is uninitialized. Initialize
+                // `EXPECTED_BYTES_WIDTH` so it can be used later.
+                //
+                EXPECTED_BYTES_WIDTH = times_iterated;
+            }
         }
 
         if (!is_whitespace) {
@@ -417,7 +453,7 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
                 // Check if we've encountered a reserved `(bad)` instruction.
                 if ((offset_counter + 1) == size) {
                     // We found "(bad)", which is not a valid assembly instruction
-                    CURRENT_EXPECTED_BYTES = 0;
+                    EXPECTED_BYTES_COUNT = 0;
 
                     return false;
                 }
@@ -461,13 +497,13 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
 
             has_text = true;
         }
-        else if (is_maybe_a_byte && (hexadecimal_count == 2 || hexadecimal_count == 4 || hexadecimal_count == 8))
+        else if (is_maybe_a_byte && (EXPECTED_BYTES_WIDTH != 0 && hexadecimal_count == EXPECTED_BYTES_WIDTH))
         {
             // We've found a hexadecimal byte.
             skip(lexer);
             unsigned int found = look_ahead_for_bytes(lexer, hexadecimal_count) + 1;
 
-            if (found > CURRENT_EXPECTED_BYTES)
+            if (found > EXPECTED_BYTES_COUNT)
             {
                 // *** Special state-related logic here.
                 //
@@ -482,7 +518,7 @@ static bool scan_assembly_instruction(TSLexer *lexer) {
                 //
                 // It's a bit complicated but is an invaluable piece of data to track.
                 //
-                CURRENT_EXPECTED_BYTES = found;
+                EXPECTED_BYTES_COUNT = found;
             }
 
             // We found at least one byte so we aren't in an Assembly
